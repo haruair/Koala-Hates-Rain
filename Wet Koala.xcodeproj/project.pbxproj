@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E59D79F318ABA9F400D70858 /* sprite.atalas in Resources */ = {isa = PBXBuildFile; fileRef = E59D79F218ABA9F400D70858 /* sprite.atalas */; };
 		E59D79F618ABAABD00D70858 /* HomeScene.m in Sources */ = {isa = PBXBuildFile; fileRef = E59D79F518ABAABD00D70858 /* HomeScene.m */; };
 		E5A3EA1018AB60AC004336F3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5A3EA0F18AB60AC004336F3 /* Foundation.framework */; };
 		E5A3EA1218AB60AC004336F3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5A3EA1118AB60AC004336F3 /* CoreGraphics.framework */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E59D79F218ABA9F400D70858 /* sprite.atalas */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sprite.atalas; sourceTree = "<group>"; };
 		E59D79F418ABAABD00D70858 /* HomeScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeScene.h; sourceTree = "<group>"; };
 		E59D79F518ABAABD00D70858 /* HomeScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeScene.m; sourceTree = "<group>"; };
 		E5A3EA0C18AB60AC004336F3 /* Wet Koala.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Wet Koala.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -132,6 +134,7 @@
 				E5A3EA2918AB60AC004336F3 /* GameScene.h */,
 				E5A3EA2A18AB60AC004336F3 /* GameScene.m */,
 				E5A3EA2E18AB60AC004336F3 /* Images.xcassets */,
+				E59D79F218ABA9F400D70858 /* sprite.atalas */,
 				E5A3EA1818AB60AC004336F3 /* Supporting Files */,
 			);
 			path = "Wet Koala";
@@ -242,6 +245,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E59D79F318ABA9F400D70858 /* sprite.atalas in Resources */,
 				E5A3EA1C18AB60AC004336F3 /* InfoPlist.strings in Resources */,
 				E5A3EA2F18AB60AC004336F3 /* Images.xcassets in Resources */,
 				E5A3EA2518AB60AC004336F3 /* Main.storyboard in Resources */,
