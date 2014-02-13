@@ -101,6 +101,7 @@
         if (figure < [numbersNode count] && [numbersNode objectAtIndex:figure] != [NSNull null]) {
             SKSpriteNode * oldNumberNode = [numbersNode objectAtIndex:figure];
             if ([numberName isEqualToString:oldNumberNode.name]) {
+                figure++;
                 continue;
             }else{
                 [oldNumberNode removeFromParent];
