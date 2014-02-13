@@ -87,6 +87,11 @@
     
     int figure = 0;
     
+    if (displayNumber == 0) {
+        [self addNumber:0 atIndex:0];
+        return;
+    }
+    
     while (displayNumber) {
         digit = displayNumber % 10;
         displayNumber /= 10;
@@ -102,19 +107,21 @@
                 [numbersNode removeObject:oldNumberNode];
             }
         }
-        
-        SKSpriteNode * number = [SKSpriteNode spriteNodeWithTexture: [numberTexture objectAtIndex:digit]];
-        number.anchorPoint = CGPointMake(1.0, .0);
-        number.name = numberName;
-        
-        [self addChild:number];
-        [number runAction:[self getShowAction]];
-        
-        [numbersNode insertObject:number atIndex:figure];
-        
+        [self addNumber:digit atIndex:figure];
         figure++;
     }
     [self updateNumbersPosition];
+}
+
+-(void) addNumber:(NSInteger)digit atIndex:(int)index {
+    NSString * numberName =[NSString stringWithFormat:@"number-%d", (int) digit];
+    SKSpriteNode * number = [SKSpriteNode spriteNodeWithTexture: [numberTexture objectAtIndex:digit]];
+    number.anchorPoint = CGPointMake(1.0, .0);
+    number.name = numberName;
+    
+    [self addChild:number];
+    [number runAction:[self getShowAction]];
+    [numbersNode insertObject:number atIndex:index];
 }
 
 -(SKAction *) getShowAction {
