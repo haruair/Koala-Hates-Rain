@@ -130,22 +130,16 @@
 		E5A3EA1718AB60AC004336F3 /* Wet Koala */ = {
 			isa = PBXGroup;
 			children = (
+				E5A3EA2E18AB60AC004336F3 /* Images.xcassets */,
+				E59D79F218ABA9F400D70858 /* sprite.atalas */,
+				E5A3EA1818AB60AC004336F3 /* Supporting Files */,
+				E5FA8CD918AE4B24007ACF09 /* Custom Nodes */,
+				E5FA8CD818AE4B06007ACF09 /* Scenes */,
 				E5A3EA2018AB60AC004336F3 /* AppDelegate.h */,
 				E5A3EA2118AB60AC004336F3 /* AppDelegate.m */,
 				E5A3EA2318AB60AC004336F3 /* Main.storyboard */,
 				E5A3EA2618AB60AC004336F3 /* ViewController.h */,
 				E5A3EA2718AB60AC004336F3 /* ViewController.m */,
-				E59D79F418ABAABD00D70858 /* HomeScene.h */,
-				E59D79F518ABAABD00D70858 /* HomeScene.m */,
-				E5A3EA2918AB60AC004336F3 /* GameScene.h */,
-				E5A3EA2A18AB60AC004336F3 /* GameScene.m */,
-				E5FA8CCD18ACE80E007ACF09 /* CounterHandler.h */,
-				E5FA8CCE18ACE80E007ACF09 /* CounterHandler.m */,
-				E5A3EA2E18AB60AC004336F3 /* Images.xcassets */,
-				E59D79F218ABA9F400D70858 /* sprite.atalas */,
-				E5A3EA1818AB60AC004336F3 /* Supporting Files */,
-				E5FA8CD518AE483C007ACF09 /* ButtonNode.h */,
-				E5FA8CD618AE483C007ACF09 /* ButtonNode.m */,
 			);
 			path = "Wet Koala";
 			sourceTree = "<group>";
@@ -177,6 +171,28 @@
 				E5A3EA3E18AB60AC004336F3 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E5FA8CD818AE4B06007ACF09 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				E59D79F418ABAABD00D70858 /* HomeScene.h */,
+				E59D79F518ABAABD00D70858 /* HomeScene.m */,
+				E5A3EA2918AB60AC004336F3 /* GameScene.h */,
+				E5A3EA2A18AB60AC004336F3 /* GameScene.m */,
+			);
+			name = Scenes;
+			sourceTree = "<group>";
+		};
+		E5FA8CD918AE4B24007ACF09 /* Custom Nodes */ = {
+			isa = PBXGroup;
+			children = (
+				E5FA8CD518AE483C007ACF09 /* ButtonNode.h */,
+				E5FA8CD618AE483C007ACF09 /* ButtonNode.m */,
+				E5FA8CCD18ACE80E007ACF09 /* CounterHandler.h */,
+				E5FA8CCE18ACE80E007ACF09 /* CounterHandler.m */,
+			);
+			name = "Custom Nodes";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
