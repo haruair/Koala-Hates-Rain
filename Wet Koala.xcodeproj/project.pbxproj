@@ -26,6 +26,7 @@
 		E5A3EA4018AB60AC004336F3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E5A3EA3E18AB60AC004336F3 /* InfoPlist.strings */; };
 		E5A3EA4218AB60AC004336F3 /* Wet_KoalaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E5A3EA4118AB60AC004336F3 /* Wet_KoalaTests.m */; };
 		E5FA8CCF18ACE80E007ACF09 /* CounterHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FA8CCE18ACE80E007ACF09 /* CounterHandler.m */; };
+		E5FA8CD718AE483C007ACF09 /* ButtonNode.m in Sources */ = {isa = PBXBuildFile; fileRef = E5FA8CD618AE483C007ACF09 /* ButtonNode.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +67,8 @@
 		E5A3EA4118AB60AC004336F3 /* Wet_KoalaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Wet_KoalaTests.m; sourceTree = "<group>"; };
 		E5FA8CCD18ACE80E007ACF09 /* CounterHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CounterHandler.h; sourceTree = "<group>"; };
 		E5FA8CCE18ACE80E007ACF09 /* CounterHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CounterHandler.m; sourceTree = "<group>"; };
+		E5FA8CD518AE483C007ACF09 /* ButtonNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonNode.h; sourceTree = "<group>"; };
+		E5FA8CD618AE483C007ACF09 /* ButtonNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonNode.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +144,8 @@
 				E5A3EA2E18AB60AC004336F3 /* Images.xcassets */,
 				E59D79F218ABA9F400D70858 /* sprite.atalas */,
 				E5A3EA1818AB60AC004336F3 /* Supporting Files */,
+				E5FA8CD518AE483C007ACF09 /* ButtonNode.h */,
+				E5FA8CD618AE483C007ACF09 /* ButtonNode.m */,
 			);
 			path = "Wet Koala";
 			sourceTree = "<group>";
@@ -277,6 +282,7 @@
 				E5A3EA2218AB60AC004336F3 /* AppDelegate.m in Sources */,
 				E5FA8CCF18ACE80E007ACF09 /* CounterHandler.m in Sources */,
 				E5A3EA1E18AB60AC004336F3 /* main.m in Sources */,
+				E5FA8CD718AE483C007ACF09 /* ButtonNode.m in Sources */,
 				E59D79F618ABAABD00D70858 /* HomeScene.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
