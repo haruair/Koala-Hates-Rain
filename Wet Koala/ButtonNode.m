@@ -106,6 +106,10 @@
     _returnMethod = returnMethod;
 }
 
+-(void) runMethod {
+    _returnMethod();
+}
+
 -(void) didActionTouched {
     if ([_button actionForKey:@"button-touched"]) {
         [_button removeActionForKey:@"button-touched"];
@@ -132,7 +136,7 @@
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     if ([self actionForKey:@"button-touched"]) {
-        _returnMethod();
+        [self runMethod];
     }
     [self didActionDefault];
 }
