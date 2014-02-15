@@ -10,11 +10,25 @@
 #import "HomeScene.h"
 #import "GameScene.h"
 
+@import AVFoundation;
+
+@interface ViewController()
+@property (nonatomic) AVAudioPlayer * backgroundMusicPlayer;
+@end
+
 @implementation ViewController
 
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
+    
+    // Add Background Music
+    NSError *error;
+    NSURL * backgroundMusicURL = [[NSBundle mainBundle] URLForResource:@"bgm" withExtension:@"m4a"];
+    self.backgroundMusicPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:backgroundMusicURL error:&error];
+    self.backgroundMusicPlayer.numberOfLoops = -1;
+    [self.backgroundMusicPlayer prepareToPlay];
+    [self.backgroundMusicPlayer play];
     
     // Configure the view.
     SKView * skView = (SKView *)self.view;
