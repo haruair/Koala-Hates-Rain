@@ -128,6 +128,7 @@
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self runAction:[SKAction playSoundFileNamed:@"button-in.m4a" waitForCompletion:NO]];
     [self didActionTouched];
 }
 
@@ -136,6 +137,7 @@
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     if ([self actionForKey:@"button-touched"]) {
+        [self runAction:[SKAction playSoundFileNamed:@"button-out.m4a" waitForCompletion:NO]];
         [self runMethod];
     }
     [self didActionDefault];

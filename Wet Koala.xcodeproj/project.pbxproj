@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		E52DF9AE18AF968900CE624C /* sprite.atlas in Resources */ = {isa = PBXBuildFile; fileRef = E52DF9AD18AF968900CE624C /* sprite.atlas */; };
+		E52DF9B318AF9C7500CE624C /* button-in.m4a in Resources */ = {isa = PBXBuildFile; fileRef = E52DF9B118AF9C7500CE624C /* button-in.m4a */; };
+		E52DF9B418AF9C7500CE624C /* button-out.m4a in Resources */ = {isa = PBXBuildFile; fileRef = E52DF9B218AF9C7500CE624C /* button-out.m4a */; };
 		E59D79F618ABAABD00D70858 /* HomeScene.m in Sources */ = {isa = PBXBuildFile; fileRef = E59D79F518ABAABD00D70858 /* HomeScene.m */; };
 		E5A3EA1018AB60AC004336F3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5A3EA0F18AB60AC004336F3 /* Foundation.framework */; };
 		E5A3EA1218AB60AC004336F3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5A3EA1118AB60AC004336F3 /* CoreGraphics.framework */; };
@@ -41,6 +43,8 @@
 
 /* Begin PBXFileReference section */
 		E52DF9AD18AF968900CE624C /* sprite.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = sprite.atlas; sourceTree = "<group>"; };
+		E52DF9B118AF9C7500CE624C /* button-in.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = "button-in.m4a"; path = "Sounds/button-in.m4a"; sourceTree = "<group>"; };
+		E52DF9B218AF9C7500CE624C /* button-out.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = "button-out.m4a"; path = "Sounds/button-out.m4a"; sourceTree = "<group>"; };
 		E59D79F418ABAABD00D70858 /* HomeScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeScene.h; sourceTree = "<group>"; };
 		E59D79F518ABAABD00D70858 /* HomeScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeScene.m; sourceTree = "<group>"; };
 		E5A3EA0C18AB60AC004336F3 /* Wet Koala.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Wet Koala.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -96,6 +100,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E52DF9B518AF9C7E00CE624C /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				E52DF9B118AF9C7500CE624C /* button-in.m4a */,
+				E52DF9B218AF9C7500CE624C /* button-out.m4a */,
+			);
+			name = Sounds;
+			sourceTree = "<group>";
+		};
 		E5A3EA0318AB60AC004336F3 = {
 			isa = PBXGroup;
 			children = (
@@ -130,6 +143,7 @@
 		E5A3EA1718AB60AC004336F3 /* Wet Koala */ = {
 			isa = PBXGroup;
 			children = (
+				E52DF9B518AF9C7E00CE624C /* Sounds */,
 				E5A3EA2E18AB60AC004336F3 /* Images.xcassets */,
 				E52DF9AD18AF968900CE624C /* sprite.atlas */,
 				E5A3EA1818AB60AC004336F3 /* Supporting Files */,
@@ -271,6 +285,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E52DF9B418AF9C7500CE624C /* button-out.m4a in Resources */,
+				E52DF9B318AF9C7500CE624C /* button-in.m4a in Resources */,
 				E5A3EA1C18AB60AC004336F3 /* InfoPlist.strings in Resources */,
 				E5A3EA2F18AB60AC004336F3 /* Images.xcassets in Resources */,
 				E52DF9AE18AF968900CE624C /* sprite.atlas in Resources */,
