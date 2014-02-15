@@ -68,6 +68,9 @@
 }
 
 -(void) startButtonPressed {
+    SKTransition * reveal = [SKTransition fadeWithDuration: 0.5];
+    SKScene * myScene = [[GameScene alloc] initWithSize:self.size];
+    [self.view presentScene:myScene transition:reveal];
 }
 
 -(void) scoreButtonPressed {
