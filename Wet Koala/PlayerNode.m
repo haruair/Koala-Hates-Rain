@@ -107,7 +107,7 @@
 -(void) checkLocation {
     if (_location.x + 10 > _player.position.x && _location.x - 10 < _player.position.x){
         [self stopped];
-    }else{
+    }else if (_location.x + 20 <= _player.position.x || _location.x - 20 >= _player.position.x){
         [self updateMotion];
     }
 }
