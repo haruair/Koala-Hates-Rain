@@ -10,7 +10,6 @@
 
 @interface PlayerNode()
 @property (nonatomic) NSTimeInterval lastUpdateTimeInterval;
-@property (nonatomic) BOOL isLive;
 @end
 
 @implementation PlayerNode

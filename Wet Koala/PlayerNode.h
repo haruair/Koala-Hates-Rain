@@ -9,7 +9,11 @@
 #import <SpriteKit/SpriteKit.h>
 
 @interface PlayerNode : SKSpriteNode
+
+@property (nonatomic) BOOL isLive;
+
 -(id) initWithDefaultTexture:(SKTexture *)defaultTexture andAnimateTextures:(NSArray *)animateTextures;
 -(void)update:(CFTimeInterval)currentTime;
 -(void) setPhysicsBodyCategoryMask:(uint32_t) playerCategory andContactMask:(uint32_t) targetCategory;
+
 @end
