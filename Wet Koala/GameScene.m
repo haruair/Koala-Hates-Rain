@@ -159,6 +159,37 @@ static const uint32_t koalaCategory    =  0x1 << 1;
     [raindrop runAction:[SKAction sequence:@[actionMove, countMove, actionMoveDone]] withKey:@"rain"];
 }
 
+-(void) stopAllRaindrop{
+    for (SKSpriteNode * node in [self children]) {
+        if ([node actionForKey:@"rain"]) {
+            [node removeActionForKey:@"rain"];
+        }
+    }
+}
+
+-(void) didBeginContact:(SKPhysicsContact *) contact {
+    SKPhysicsBody *firstBody, *secondBody;
+    if (contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask) {
+        firstBody = contact.bodyA;
+        secondBody = contact.bodyB;
+    }else{
+        firstBody = contact.bodyB;
+        secondBody = contact.bodyA;
+    }
+    
+    if ((firstBody.categoryBitMask & rainCategory) != 0 &&
+        (secondBody.categoryBitMask & koalaCategory) != 0) {
+        [self player:(SKSpriteNode *) secondBody.node didCollideWithRaindrop:(SKSpriteNode *)firstBody.node];
+    }
+}
+
+-(void) player:(SKSpriteNode *)playerNode didCollideWithRaindrop:(SKSpriteNode *)raindropNode {
+    if (_player.isLive) {
+        [self stopAllRaindrop];
+        [_player ended];
+    }
+}
+
 -(void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     [ButtonNode doButtonsActionEnded:self touches:touches withEvent:event];
     [_player touchesEnded:touches withEvent:event];

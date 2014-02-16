@@ -67,6 +67,11 @@
                                               restore:YES]] withKey:@"player-walking"];
 }
 
+-(void) ended {
+    self.isLive = NO;
+    [self stopped];
+}
+
 -(BOOL) isMoved {
     if ([_player actionForKey:@"player-walking"]) {
         return YES;
