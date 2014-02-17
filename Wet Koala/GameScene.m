@@ -170,7 +170,7 @@ static const uint32_t koalaCategory    =  0x1 << 1;
     SKSpriteNode * scoreBoard = [SKSpriteNode spriteNodeWithTexture:[_atlas textureNamed:@"scoreboard"]];
     scoreBoard.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
     
-    if([self storeHighScore:[_counter getNumber]]){
+    if([self storeHighScore:(int) [_counter getNumber]]){
         NSLog(@"Get High Score!!");
     }
     
