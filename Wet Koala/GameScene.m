@@ -161,8 +161,6 @@ static const uint32_t koalaCategory    =  0x1 << 1;
 }
 
 -(void) gameOver {
-    [_counter runAction:[SKAction fadeOutWithDuration:0.3]];
-    [_score runAction:[SKAction fadeOutWithDuration:0.3]];
     
     SKSpriteNode * gameOverText = [SKSpriteNode spriteNodeWithTexture:[_atlas textureNamed:@"text-gameover"]];
     gameOverText.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) * 3 / 2);
@@ -330,8 +328,13 @@ static const uint32_t koalaCategory    =  0x1 << 1;
 
 -(void) player:(SKSpriteNode *)playerNode didCollideWithRaindrop:(SKSpriteNode *)raindropNode {
     if (_player.isLive) {
+        
         [_player ended];
         [self stopAllRaindrop];
+        
+        [_counter runAction:[SKAction fadeOutWithDuration:0.3]];
+        [_score runAction:[SKAction fadeOutWithDuration:0.3]];
+        
         [self runAction:
          [SKAction sequence:@[
                               [SKAction waitForDuration:3.0],
