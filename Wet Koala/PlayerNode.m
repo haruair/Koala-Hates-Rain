@@ -79,6 +79,9 @@
 
 -(void) ended {
     self.isLive = NO;
+    
+    [self runAction:[SKAction playSoundFileNamed:@"wet.m4a" waitForCompletion:NO]];
+    
     if (_endedTexture != nil) {
         [_player runAction:[SKAction repeatActionForever:
                             [SKAction animateWithTextures:@[_endedTexture]

@@ -53,6 +53,7 @@
 		E52DF9E218B0DA8500CE624C /* PlayerNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerNode.m; sourceTree = "<group>"; };
 		E52DF9E718B224D700CE624C /* GuideNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuideNode.h; sourceTree = "<group>"; };
 		E52DF9E818B224D700CE624C /* GuideNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuideNode.m; sourceTree = "<group>"; };
+		E52DF9EA18B24B1900CE624C /* wet.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = wet.m4a; path = Sounds/wet.m4a; sourceTree = "<group>"; };
 		E59D79F418ABAABD00D70858 /* HomeScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeScene.h; sourceTree = "<group>"; };
 		E59D79F518ABAABD00D70858 /* HomeScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeScene.m; sourceTree = "<group>"; };
 		E5A3EA0C18AB60AC004336F3 /* Wet Koala.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Wet Koala.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -111,6 +112,7 @@
 		E52DF9B518AF9C7E00CE624C /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				E52DF9EA18B24B1900CE624C /* wet.m4a */,
 				E52DF9B118AF9C7500CE624C /* button-in.m4a */,
 				E52DF9B218AF9C7500CE624C /* button-out.m4a */,
 				E52DF9BB18AF9F6900CE624C /* bgm.m4a */,
