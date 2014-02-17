@@ -49,7 +49,7 @@
         SKTexture * startTouched = [atlas textureNamed:@"button-start-on"];
         
         ButtonNode * startButton = [[ButtonNode alloc] initWithDefaultTexture:startDefault andTouchedTexture:startTouched];
-        startButton.position = CGPointMake(CGRectGetMidX(self.frame) - (startButton.size.width / 2 + 10), buttonY);
+        startButton.position = CGPointMake(CGRectGetMidX(self.frame) - (startButton.size.width / 2 + 8), buttonY);
         
         [startButton setMethod: ^ (void) { [self startButtonPressed]; } ];
         [self addChild:startButton];
@@ -58,7 +58,7 @@
         SKTexture * scoreTouched = [atlas textureNamed:@"button-score-on"];
         
         ButtonNode * scoreButton = [[ButtonNode alloc] initWithDefaultTexture:scoreDefault andTouchedTexture:scoreTouched];
-        scoreButton.position = CGPointMake(CGRectGetMidX(self.frame) + (scoreButton.size.width / 2 + 10), buttonY);
+        scoreButton.position = CGPointMake(CGRectGetMidX(self.frame) + (scoreButton.size.width / 2 + 8), buttonY);
         
         [scoreButton setMethod: ^ (void) { [self scoreButtonPressed]; } ];
         [self addChild:scoreButton];

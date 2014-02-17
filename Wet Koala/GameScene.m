@@ -7,6 +7,7 @@
 //
 
 #import "GameScene.h"
+#import "HomeScene.h"
 #import "CounterHandler.h"
 #import "PlayerNode.h"
 #import "ButtonNode.h"
@@ -116,6 +117,85 @@ static const uint32_t koalaCategory    =  0x1 << 1;
     return self;
 }
 
+-(void) gameOver {
+    SKSpriteNode * gameOverText = [SKSpriteNode spriteNodeWithTexture:[_atlas textureNamed:@"text-gameover"]];
+    gameOverText.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) * 3 / 2);
+    
+    SKSpriteNode * scoreBoard = [SKSpriteNode spriteNodeWithTexture:[_atlas textureNamed:@"scoreboard"]];
+    scoreBoard.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+    
+    CounterHandler * currentScore = [[CounterHandler alloc] initWithNumber:[_counter getNumber]];
+    currentScore.position = CGPointMake(CGRectGetMidX(self.frame) + 105, CGRectGetMidY(self.frame) - 5.0);
+    
+    CounterHandler * highScore = [[CounterHandler alloc] initWithNumber:[_counter getNumber]];
+    highScore.position = CGPointMake(CGRectGetMidX(self.frame) + 105, CGRectGetMidY(self.frame) - 55.0);
+
+    CGFloat buttonY = CGRectGetMidY(self.frame) / 2;
+    
+    SKTexture * homeDefault = [_atlas textureNamed:@"button-home-off"];
+    SKTexture * homeTouched = [_atlas textureNamed:@"button-home-on"];
+    
+    ButtonNode * homeButton = [[ButtonNode alloc] initWithDefaultTexture:homeDefault andTouchedTexture:homeTouched];
+    homeButton.position = CGPointMake(CGRectGetMidX(self.frame) - (homeButton.size.width / 2 + 8), buttonY);
+    
+    [homeButton setMethod: ^ (void) {
+        SKTransition * reveal = [SKTransition fadeWithDuration: 0.5];
+        SKScene * homeScene = [[HomeScene alloc] initWithSize:self.size];
+        [self.view presentScene:homeScene transition:reveal];
+    } ];
+    
+    
+    SKTexture * shareDefault = [_atlas textureNamed:@"button-share-off"];
+    SKTexture * shareTouched = [_atlas textureNamed:@"button-share-on"];
+    
+    ButtonNode * shareButton = [[ButtonNode alloc] initWithDefaultTexture:shareDefault andTouchedTexture:shareTouched];
+    shareButton.position = CGPointMake(CGRectGetMidX(self.frame) + (shareButton.size.width / 2 + 8), buttonY);
+    
+    [shareButton setMethod: ^ (void) {
+        NSLog(@"ShareButton Action");
+    } ];
+    
+    [self addChild:gameOverText];
+    [self addChild:scoreBoard];
+    
+    SKAction * buttonMove = [SKAction sequence:@[
+                                                 [SKAction moveToY:buttonY - 10.0 duration:0.0],
+                                                 [SKAction group:@[[SKAction fadeInWithDuration:0.3], [SKAction moveToY:buttonY duration:0.5]]
+                                                 ]]];
+    
+    gameOverText.alpha = 0.0;
+    scoreBoard.alpha = 0.0;
+    
+    [self runAction:[SKAction sequence:@[[SKAction runBlock:^{
+        [gameOverText runAction:
+         [SKAction sequence:@[
+                              [SKAction group:@[[SKAction scaleBy:2.0 duration:0.0]]],
+                              [SKAction group:@[[SKAction fadeInWithDuration:0.5],[SKAction scaleBy:0.5 duration:0.2]]]
+                              ]]];
+    }],
+     [SKAction waitForDuration:0.2],
+     [SKAction runBlock:^{
+        [scoreBoard runAction:[SKAction fadeInWithDuration:0.5]];
+    }],
+     [SKAction waitForDuration:0.6],
+     [SKAction runBlock:^{
+        
+    [self addChild:highScore];
+    [self addChild:currentScore];
+        
+    }],
+     [SKAction waitForDuration:0.3],
+     [SKAction runBlock:^{
+        homeButton.alpha = 0.0;
+        shareButton.alpha = 0.0;
+        [self addChild:homeButton];
+        [self addChild:shareButton];
+        [homeButton runAction:buttonMove];
+        [shareButton runAction:buttonMove];
+    }]]]];
+
+}
+
 -(void) addRaindrop {
 
     SKTexture *temp = _waterDroppingFrames[0];
@@ -185,8 +265,17 @@ static const uint32_t koalaCategory    =  0x1 << 1;
 
 -(void) player:(SKSpriteNode *)playerNode didCollideWithRaindrop:(SKSpriteNode *)raindropNode {
     if (_player.isLive) {
-        [self stopAllRaindrop];
         [_player ended];
+        [self stopAllRaindrop];
+        [self runAction:
+         [SKAction sequence:@[
+                              [SKAction waitForDuration:3.0],
+                              [SKAction runBlock:^{
+                                 // call gameover screen
+                                 [self gameOver];
+                              }],
+          ]]];
+
     }
 }
 
