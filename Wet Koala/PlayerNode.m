@@ -16,6 +16,8 @@
 {
     SKSpriteNode * _player;
     SKTexture * _defaultTexture;
+    SKTexture * _endedTexture;
+    SKTexture * _endedAdditionalTexture;
     NSArray * _animateTextures;
     CGPoint _location;
     CGVector _direction;
@@ -46,6 +48,14 @@
     return self;
 }
 
+-(void) setEndedTexture:(SKTexture *) endedTexture {
+    _endedTexture = endedTexture;
+}
+
+-(void) setEndedAdditionalTexture:(SKTexture *) endedAdditionalTexture {
+    _endedAdditionalTexture = endedAdditionalTexture;
+}
+
 -(void) setPhysicsBodyCategoryMask:(uint32_t) playerCategory andContactMask:(uint32_t) targetCategory {
     _player.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:_player.size];
     _player.physicsBody.dynamic = YES;
@@ -69,6 +79,26 @@
 
 -(void) ended {
     self.isLive = NO;
+    if (_endedTexture != nil) {
+        [_player runAction:[SKAction repeatActionForever:
+                            [SKAction animateWithTextures:@[_endedTexture]
+                                             timePerFrame:0.1f
+                                                   resize:YES
+                                                  restore:YES]] withKey:@"player-ended"];
+    }
+    if (_endedAdditionalTexture != nil) {
+        
+        SKSpriteNode * effect = [SKSpriteNode spriteNodeWithTexture:_endedAdditionalTexture];
+        effect.alpha = 0.0;
+        [_player insertChild:effect atIndex:0];
+        [effect runAction:[SKAction sequence:@[[SKAction scaleBy:0.1 duration:0.0],
+                                               [SKAction group:@[[SKAction fadeInWithDuration:0.2],[SKAction scaleBy:30.0 duration:0.2]]],
+                                               [SKAction group:@[[SKAction fadeOutWithDuration:0.2],[SKAction scaleBy:0.3 duration:0.2]]],
+                                               [SKAction runBlock:^{
+            [effect removeFromParent];
+            _player.zPosition = 0.0;
+        }]]]];
+    }
     [self stopped];
 }
 

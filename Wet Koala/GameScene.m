@@ -96,6 +96,10 @@ static const uint32_t koalaCategory    =  0x1 << 1;
         
         SKTexture * koalaTexture = [self.atlas textureNamed:@"koala-stop"];
         PlayerNode * player = [[PlayerNode alloc] initWithDefaultTexture:koalaTexture andAnimateTextures:_koalaAnimateTextures];
+        
+        [player setEndedTexture:[self.atlas textureNamed:@"koala-wet"]];
+        [player setEndedAdditionalTexture:[self.atlas textureNamed:@"wet"]];
+        
         player.position = CGPointMake(CGRectGetMidX(self.frame), ground.position.y + ground.size.height + koalaTexture.size.height / 2 - 15.0);
         [player setPhysicsBodyCategoryMask:koalaCategory andContactMask:rainCategory];
         [self addChild: player];
@@ -332,12 +336,14 @@ static const uint32_t koalaCategory    =  0x1 << 1;
         [_player ended];
         [self stopAllRaindrop];
         
+        [raindropNode runAction:[SKAction fadeOutWithDuration:0.3]];
+        
         [_counter runAction:[SKAction fadeOutWithDuration:0.3]];
         [_score runAction:[SKAction fadeOutWithDuration:0.3]];
         
         [self runAction:
          [SKAction sequence:@[
-                              [SKAction waitForDuration:3.0],
+                              [SKAction waitForDuration:1.0],
                               [SKAction runBlock:^{
                                  // call gameover screen
                                  [self gameOver];

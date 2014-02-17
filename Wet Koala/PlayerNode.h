@@ -16,5 +16,6 @@
 -(void) ended;
 -(void) update:(CFTimeInterval)currentTime;
 -(void) setPhysicsBodyCategoryMask:(uint32_t) playerCategory andContactMask:(uint32_t) targetCategory;
-
+-(void) setEndedTexture:(SKTexture *) endedTexture;
+-(void) setEndedAdditionalTexture:(SKTexture *) endedAdditionalTexture;
 @end
