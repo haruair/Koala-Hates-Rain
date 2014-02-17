@@ -10,5 +10,5 @@
 #import <SpriteKit/SpriteKit.h>
 
 @interface ViewController : UIViewController
-
+- (void)shareText:(NSString *)string andImage:(UIImage *)image;
 @end

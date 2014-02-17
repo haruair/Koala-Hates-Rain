@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 haruair. All rights reserved.
 //
 
+#import "ViewController.h"
 #import "GameScene.h"
 #import "HomeScene.h"
 #import "CounterHandler.h"
@@ -204,7 +205,9 @@ static const uint32_t koalaCategory    =  0x1 << 1;
     shareButton.position = CGPointMake(CGRectGetMidX(self.frame) + (shareButton.size.width / 2 + 8), buttonY);
     
     [shareButton setMethod: ^ (void) {
-        NSLog(@"ShareButton Action");
+        ViewController * viewController = (ViewController *) self.view.window.rootViewController;
+        NSString * sharetext = [NSString stringWithFormat:@"I just scored %d in #KoalaHatesRain!", (int) [_counter getNumber]];
+        [viewController shareText:sharetext andImage:nil];
     } ];
     
     [self addChild:gameOverText];
