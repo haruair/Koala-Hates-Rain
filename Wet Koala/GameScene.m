@@ -175,7 +175,7 @@ static const uint32_t koalaCategory    =  0x1 << 1;
     }
     
     CounterHandler * currentScore = [[CounterHandler alloc] initWithNumber:[_counter getNumber]];
-    currentScore.position = CGPointMake(CGRectGetMidX(self.frame) + 105, CGRectGetMidY(self.frame) - 5.0);
+    currentScore.position = CGPointMake(CGRectGetMidX(self.frame) + 105, CGRectGetMidY(self.frame) - 4.0);
     
     CounterHandler * highScore = [[CounterHandler alloc] initWithNumber:[self getHighScore]];
     highScore.position = CGPointMake(CGRectGetMidX(self.frame) + 105, CGRectGetMidY(self.frame) - 55.0);
