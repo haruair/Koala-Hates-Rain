@@ -11,6 +11,7 @@
 #import "CounterHandler.h"
 #import "PlayerNode.h"
 #import "ButtonNode.h"
+#import "GuideNode.h"
 
 static const uint32_t rainCategory     =  0x1 << 0;
 static const uint32_t koalaCategory    =  0x1 << 1;
@@ -24,15 +25,21 @@ static const uint32_t koalaCategory    =  0x1 << 1;
 @implementation GameScene
 {
     CounterHandler * _counter;
-    NSArray * _waterDroppingFrames;
-    PlayerNode * _player;
+    NSArray        * _waterDroppingFrames;
+    PlayerNode     * _player;
+    SKSpriteNode   * _ground;
+    SKSpriteNode   * _score;
+    GuideNode      * _guide;
     
-    SKSpriteNode * _ground;
+    BOOL _raindrop;
 }
 
 -(id)initWithSize:(CGSize)size {    
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
+        
+        // hold raindrop first
+        _raindrop = NO;
         
         self.backgroundColor = [SKColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
         self.physicsWorld.gravity = CGVectorMake(0, 0);
@@ -78,13 +85,6 @@ static const uint32_t koalaCategory    =  0x1 << 1;
         
         _ground = ground;
         
-        // set count
-        CounterHandler * counter = [[CounterHandler alloc] init];
-        counter.position = CGPointMake(CGRectGetMidX(self.frame) + 105.0, ground.position.y + ground.size.height * 3 / 4 - 45.0);
-        [self addChild:counter];
-        _counter = counter;
-        
-        
         // set Koala Player
         NSMutableArray * _koalaAnimateTextures = [[NSMutableArray alloc] init];
         
@@ -111,13 +111,59 @@ static const uint32_t koalaCategory    =  0x1 << 1;
         }
         
         _waterDroppingFrames = [[NSArray alloc] initWithArray: _rainTextures];
-
+        
+        
+        // add Guide
+        GuideNode * guide = [[GuideNode alloc] initWithTitleTexture:[_atlas textureNamed:@"text-swipe"]
+                                                andIndicatorTexture:[_atlas textureNamed:@"finger"]];
+        guide.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+        [guide setMethod:^{
+            [self gameStart];
+        }];
+        [self addChild:guide];
+        
+        _guide = guide;
         
     }
     return self;
 }
 
+-(void) gameStart {
+    
+    // set count
+    SKSpriteNode * score = [SKSpriteNode spriteNodeWithTexture:[_atlas textureNamed:@"score"]];
+    score.position = CGPointMake(CGRectGetMidX(self.frame),  _ground.position.y + _ground.size.height * 3 / 4 - 27.0);
+    score.alpha = 0.0;
+    [self addChild:score];
+    
+    _score = score;
+    
+    CounterHandler * counter = [[CounterHandler alloc] init];
+    counter.position = CGPointMake(CGRectGetMidX(self.frame) + 105.0, _ground.position.y + _ground.size.height * 3 / 4 - 45.0);
+    counter.alpha = 0.0;
+    [self addChild:counter];
+    
+    _counter = counter;
+
+    [self runAction:[SKAction sequence:@[
+                                         [SKAction waitForDuration:0.5],
+                                         [SKAction runBlock:^{
+        
+        [score runAction:[SKAction fadeInWithDuration:0.3]];
+        [counter runAction:[SKAction fadeInWithDuration:0.3]];
+    }],
+                                         [SKAction waitForDuration:0.5],
+                                         [SKAction runBlock:^{
+                                            _raindrop = YES;
+    }]]]];
+    
+
+}
+
 -(void) gameOver {
+    [_counter runAction:[SKAction fadeOutWithDuration:0.3]];
+    [_score runAction:[SKAction fadeOutWithDuration:0.3]];
+    
     SKSpriteNode * gameOverText = [SKSpriteNode spriteNodeWithTexture:[_atlas textureNamed:@"text-gameover"]];
     gameOverText.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) * 3 / 2);
     
@@ -305,6 +351,7 @@ static const uint32_t koalaCategory    =  0x1 << 1;
 
 -(void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
     [_player touchesMoved:touches withEvent:event];
+    [_guide touchesMoved:touches withEvent:event];
 }
 
 -(void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -313,7 +360,7 @@ static const uint32_t koalaCategory    =  0x1 << 1;
 }
 
 -(void)updateWithTimeSinceLastUpdate:(CFTimeInterval)timeSinceLast {
-    if(_player.isLive){
+    if(_player.isLive && _raindrop){
         self.lastSpawnTimeInterval += timeSinceLast;
         if(self.lastSpawnTimeInterval> 0.3){
             self.lastSpawnTimeInterval = 0;
