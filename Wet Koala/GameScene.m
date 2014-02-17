@@ -173,8 +173,26 @@ static const uint32_t koalaCategory    =  0x1 << 1;
     SKSpriteNode * scoreBoard = [SKSpriteNode spriteNodeWithTexture:[_atlas textureNamed:@"scoreboard"]];
     scoreBoard.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
     
+    SKSpriteNode * newRecord = [SKSpriteNode spriteNodeWithColor:nil size:CGSizeMake(0.0, 0.0)];
+    
     if([self storeHighScore:(int) [_counter getNumber]]){
-        NSLog(@"Get High Score!!");
+        NSArray * recordAnimate = @[[_atlas textureNamed:@"text-new-record-pink"],
+                                    [_atlas textureNamed:@"text-new-record-red"]];
+        newRecord = [SKSpriteNode spriteNodeWithTexture: recordAnimate[0]];
+        newRecord.position = CGPointMake(self.frame.size.width / 2 + 90, self.frame.size.height / 2 + 45 );
+        newRecord.zPosition = 100.0;
+        [newRecord runAction:[SKAction repeatActionForever:
+                             [SKAction animateWithTextures:recordAnimate
+                                              timePerFrame:0.2f
+                                                    resize:YES
+                                                   restore:YES]] withKey:@"newrecord"];
+        
+        [newRecord runAction:[SKAction repeatActionForever:
+                              [SKAction sequence:@[[SKAction scaleBy:1.2 duration:0.1],
+                                                   [SKAction scaleBy:10.0/12.0 duration:0.1]
+                                                   ]]]];
+
+        newRecord.alpha = 0.0;
     }
     
     CounterHandler * currentScore = [[CounterHandler alloc] initWithNumber:[_counter getNumber]];
@@ -235,9 +253,10 @@ static const uint32_t koalaCategory    =  0x1 << 1;
      [SKAction waitForDuration:0.6],
      [SKAction runBlock:^{
         
-    [self addChild:highScore];
-    [self addChild:currentScore];
-        
+        [self addChild:highScore];
+        [self addChild:currentScore];
+        [self addChild:newRecord];
+        [newRecord runAction:[SKAction fadeInWithDuration:0.3]];
     }],
      [SKAction waitForDuration:0.3],
      [SKAction runBlock:^{
