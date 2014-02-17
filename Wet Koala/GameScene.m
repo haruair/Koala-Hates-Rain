@@ -124,10 +124,14 @@ static const uint32_t koalaCategory    =  0x1 << 1;
     SKSpriteNode * scoreBoard = [SKSpriteNode spriteNodeWithTexture:[_atlas textureNamed:@"scoreboard"]];
     scoreBoard.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
     
+    if([self storeHighScore:[_counter getNumber]]){
+        NSLog(@"Get High Score!!");
+    }
+    
     CounterHandler * currentScore = [[CounterHandler alloc] initWithNumber:[_counter getNumber]];
     currentScore.position = CGPointMake(CGRectGetMidX(self.frame) + 105, CGRectGetMidY(self.frame) - 5.0);
     
-    CounterHandler * highScore = [[CounterHandler alloc] initWithNumber:[_counter getNumber]];
+    CounterHandler * highScore = [[CounterHandler alloc] initWithNumber:[self getHighScore]];
     highScore.position = CGPointMake(CGRectGetMidX(self.frame) + 105, CGRectGetMidY(self.frame) - 55.0);
 
     CGFloat buttonY = CGRectGetMidY(self.frame) / 2;
@@ -194,6 +198,21 @@ static const uint32_t koalaCategory    =  0x1 << 1;
         [shareButton runAction:buttonMove];
     }]]]];
 
+}
+
+-(BOOL) storeHighScore:(int) score {
+    NSUserDefaults * record = [NSUserDefaults standardUserDefaults];
+    int highRecord = (int) [record integerForKey:@"highScore"];
+    if (highRecord < score) {
+        [record setInteger:score forKey:@"highScore"];
+        return true;
+    }
+    return false;
+}
+
+-(int) getHighScore {
+    NSUserDefaults * record = [NSUserDefaults standardUserDefaults];
+    return (int) [record integerForKey:@"highScore"];
 }
 
 -(void) addRaindrop {
