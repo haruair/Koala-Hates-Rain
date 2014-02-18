@@ -95,8 +95,10 @@
         effect.alpha = 0.0;
         [_player insertChild:effect atIndex:0];
         [effect runAction:[SKAction sequence:@[[SKAction scaleBy:0.1 duration:0.0],
-                                               [SKAction group:@[[SKAction fadeInWithDuration:0.2],[SKAction scaleBy:30.0 duration:0.2]]],
-                                               [SKAction group:@[[SKAction fadeOutWithDuration:0.2],[SKAction scaleBy:0.3 duration:0.2]]],
+                                               [SKAction group:@[[SKAction fadeInWithDuration:0.2],[SKAction scaleBy:0.3 duration:0.2]]],
+                                               [SKAction group:@[[SKAction scaleBy:60.0 duration:0.2]]],
+                                               [SKAction group:@[[SKAction fadeOutWithDuration:0.4]]],
+                                               
                                                [SKAction runBlock:^{
             [effect removeFromParent];
             _player.zPosition = 0.0;
