@@ -172,9 +172,16 @@
         CGPoint moveDifference = CGPointMake(targetPoint.x - _player.position.x, targetPoint.y - _player.position.y);
         float distanceToMove = sqrtf(moveDifference.x * moveDifference.x + moveDifference.y * moveDifference.y);
         float moveDuration = distanceToMove / playerVelocity;
+
         
-        [_player runAction:[SKAction moveTo:targetPoint duration:moveDuration] withKey:@"player-move"];
+        SKAction * moveAction = [SKAction moveTo:targetPoint duration:moveDuration];
+        SKAction * doneAction = [SKAction runBlock:(dispatch_block_t)^(){
+            [self stopped];
+        }];
         
+        SKAction * moveActionWithDone = [SKAction sequence:@[moveAction, doneAction]];
+        [_player runAction:moveActionWithDone withKey:@"player-move"];
+
         // turn direction
         if(_direction.dx * _player.xScale < 0){
             _player.xScale = - _player.xScale;
