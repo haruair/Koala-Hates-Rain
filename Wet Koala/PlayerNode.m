@@ -82,27 +82,31 @@
     
     [self runAction:[SKAction playSoundFileNamed:@"wet.m4a" waitForCompletion:NO]];
     
-    if (_endedTexture != nil) {
-        [_player runAction:[SKAction repeatActionForever:
-                            [SKAction animateWithTextures:@[_endedTexture]
-                                             timePerFrame:0.1f
-                                                   resize:YES
-                                                  restore:YES]] withKey:@"player-ended"];
-    }
     if (_endedAdditionalTexture != nil) {
         
         SKSpriteNode * effect = [SKSpriteNode spriteNodeWithTexture:_endedAdditionalTexture];
         effect.alpha = 0.0;
         [_player insertChild:effect atIndex:0];
         [effect runAction:[SKAction sequence:@[[SKAction scaleBy:0.1 duration:0.0],
-                                               [SKAction group:@[[SKAction fadeInWithDuration:0.2],[SKAction scaleBy:0.3 duration:0.2]]],
-                                               [SKAction group:@[[SKAction scaleBy:60.0 duration:0.2]]],
+                                               [SKAction group:@[[SKAction fadeInWithDuration:0.1], [SKAction scaleBy:20.0 duration:0.2]]],
                                                [SKAction group:@[[SKAction fadeOutWithDuration:0.4]]],
                                                
                                                [SKAction runBlock:^{
             [effect removeFromParent];
             _player.zPosition = 0.0;
         }]]]];
+    }
+    
+    if (_endedTexture != nil) {
+        [_player runAction:[SKAction waitForDuration:0.2] completion:^{
+            [_player runAction:
+             [SKAction repeatActionForever:
+              [SKAction animateWithTextures:@[_endedTexture]
+                               timePerFrame:0.1f
+                                     resize:YES
+                                    restore:YES]] withKey:@"player-ended"];
+            
+        }];
     }
     [self stopped];
 }
