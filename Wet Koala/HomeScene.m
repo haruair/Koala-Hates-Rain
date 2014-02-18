@@ -10,6 +10,7 @@
 #import "GameScene.h"
 
 #import "ButtonNode.h"
+#import "ViewController.h"
 
 @implementation HomeScene
 
@@ -74,7 +75,8 @@
 }
 
 -(void) scoreButtonPressed {
-    
+    ViewController * viewController = (ViewController *) self.view.window.rootViewController;
+    [viewController showGameCenterLeaderBoard];
 }
 
 

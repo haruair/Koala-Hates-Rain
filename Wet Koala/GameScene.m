@@ -275,6 +275,12 @@ static const uint32_t koalaCategory    =  0x1 << 1;
     int highRecord = (int) [record integerForKey:@"highScore"];
     if (highRecord < score) {
         [record setInteger:score forKey:@"highScore"];
+        
+        ViewController * viewController = (ViewController *) self.view.window.rootViewController;
+        if (viewController.gameCenterLogged) {
+            [viewController reportScore: (int64_t) score];
+        }
+
         return true;
     }
     return false;

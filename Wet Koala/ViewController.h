@@ -8,7 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import <SpriteKit/SpriteKit.h>
+#import <GameKit/GameKit.h>
 
 @interface ViewController : UIViewController
-- (void)shareText:(NSString *)string andImage:(UIImage *)image;
+
+@property (nonatomic) BOOL gameCenterLogged;
+- (void) showGameCenterLeaderBoard;
+- (void) shareText:(NSString *)string andImage:(UIImage *)image;
+- (void) reportScore: (int64_t) score;
 @end

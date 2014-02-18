@@ -12,12 +12,15 @@
 
 @import AVFoundation;
 
-@interface ViewController()
+@interface ViewController() <GKGameCenterControllerDelegate>
 @property (nonatomic) AVAudioPlayer * backgroundMusicPlayer;
+@property (nonatomic) GKLocalPlayer * localPlayer;
 @end
 
 @implementation ViewController
-
+{
+    NSString * _leaderboardIdentifier;
+}
 - (void)viewWillLayoutSubviews
 {
     if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]) {
@@ -30,20 +33,22 @@
     
     [super viewWillLayoutSubviews];
     
-    // Add Background Music
-    NSError *error;
-    NSURL * backgroundMusicURL = [[NSBundle mainBundle] URLForResource:@"bgm" withExtension:@"m4a"];
-    self.backgroundMusicPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:backgroundMusicURL error:&error];
-    self.backgroundMusicPlayer.numberOfLoops = -1;
-    [self.backgroundMusicPlayer prepareToPlay];
-    [self.backgroundMusicPlayer play];
-    
     // Configure the view.
     SKView * skView = (SKView *)self.view;
     if (!skView.scene) {
         
+        // Add Background Music
+        NSError *error;
+        NSURL * backgroundMusicURL = [[NSBundle mainBundle] URLForResource:@"bgm" withExtension:@"m4a"];
+        self.backgroundMusicPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:backgroundMusicURL error:&error];
+        self.backgroundMusicPlayer.numberOfLoops = -1;
+        [self.backgroundMusicPlayer prepareToPlay];
+        [self.backgroundMusicPlayer play];
+        
         skView.showsFPS = NO;
         skView.showsNodeCount = NO;
+        
+        self.gameCenterLogged = NO;
         
         // Create and configure the scene.
         
@@ -52,10 +57,103 @@
         
         // Present the scene.
         [skView presentScene:scene];
-
+        [self authenticateLocalPlayer];
     }
     
 
+}
+
+- (void) showGameCenterLeaderBoard
+{
+    GKGameCenterViewController *gameCenterController = [[GKGameCenterViewController alloc] init];
+    if (gameCenterController != nil)
+    {
+        gameCenterController.gameCenterDelegate = self;
+        gameCenterController.viewState = GKGameCenterViewControllerStateLeaderboards;
+        [self presentViewController: gameCenterController animated: YES completion:nil];
+    }
+}
+
+- (void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void) showBannerWithTitle:(NSString *)title andMessage:(NSString *)message
+{
+    [GKNotificationBanner showBannerWithTitle: title
+                                      message: message
+                            completionHandler: ^{}];
+}
+
+- (void) authenticateLocalPlayer
+{
+    GKLocalPlayer * localPlayer = [GKLocalPlayer localPlayer];
+    self.localPlayer = localPlayer;
+    
+    __weak GKLocalPlayer * weakPlayer = localPlayer;
+    
+    localPlayer.authenticateHandler = ^(UIViewController *viewController, NSError *error){
+        if (error) {
+            // NSLog(@"%@",[error localizedDescription]);
+        }
+        
+        if (viewController != nil)
+        {
+            [self showAuthenticationDialogWhenReasonable: viewController];
+        }
+        else if (weakPlayer.isAuthenticated)
+        {
+            [self authenticatedPlayer: weakPlayer];
+        }
+        else
+        {
+            [self disableGameCenter];
+        }
+    };
+}
+
+-(void) showAuthenticationDialogWhenReasonable:(UIViewController *) viewController {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"gamecenter:"]];
+}
+
+-(void) authenticatedPlayer:(GKLocalPlayer *) player {
+    // NSLog(@"authenticatedPlayer");
+    self.localPlayer = player;
+    self.gameCenterLogged = YES;
+    [self loadLeaderboardInfo];
+    // [self showBannerWithTitle:@"Koala Hates Rain" andMessage:[NSString stringWithFormat:@"Welcome %@", self.localPlayer.displayName]];
+}
+
+-(void) disableGameCenter {
+    // NSLog(@"disabled");
+    self.gameCenterLogged = NO;
+}
+
+- (void) loadLeaderboardInfo
+{
+    [self.localPlayer loadDefaultLeaderboardIdentifierWithCompletionHandler:^(NSString *leaderboardIdentifier, NSError *error) {
+        _leaderboardIdentifier = leaderboardIdentifier;
+    }];
+}
+
+- (void) reportScore: (int64_t) score {
+    // NSLog(@"_leaderboardIdentifier %@",_leaderboardIdentifier);
+    [self reportScore:score forLeaderboardID:_leaderboardIdentifier];
+}
+
+- (void) reportScore: (int64_t) score forLeaderboardID: (NSString*) identifier
+{
+    if(self.gameCenterLogged){
+        GKScore *scoreReporter = [[GKScore alloc] initWithLeaderboardIdentifier: identifier];
+        scoreReporter.value = score;
+        scoreReporter.context = 0;
+        
+        NSArray *scores = @[scoreReporter];
+        [GKScore reportScores:scores withCompletionHandler:^(NSError *error) {
+            // NSLog(@"I sent your score %lld", score);
+        }];
+    }
 }
 
 - (void)shareText:(NSString *)string andImage:(UIImage *)image
