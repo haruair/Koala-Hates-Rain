@@ -10,6 +10,7 @@
 
 @interface PlayerNode()
 @property (nonatomic) NSTimeInterval lastUpdateTimeInterval;
+@property (nonatomic) NSTimeInterval lastSpawnTimeInterval;
 @end
 
 @implementation PlayerNode
@@ -61,7 +62,6 @@
     _player.physicsBody.dynamic = YES;
     _player.physicsBody.categoryBitMask = playerCategory;
     _player.physicsBody.contactTestBitMask = targetCategory;
-    _player.physicsBody.collisionBitMask = 0;
     _player.physicsBody.usesPreciseCollisionDetection = YES;
     
 }
@@ -147,14 +147,20 @@
     }
 }
 
--(void) checkLocation {
-    if (_location.x + 10 > _player.position.x && _location.x - 10 < _player.position.x){
-        [self stopped];
-    }else if (_location.x + 20 <= _player.position.x || _location.x - 20 >= _player.position.x){
-        [self updateMotion];
+-(void) checkLocation:(CFTimeInterval)timeSinceLast {
+    
+    self.lastSpawnTimeInterval += timeSinceLast;
+    if(self.lastSpawnTimeInterval >= 1.0 / 60.0){
+        self.lastSpawnTimeInterval = 0;
+        if ((_location.x + 10 > _player.position.x && _direction.dx < 0) ||
+            (_location.x - 10 < _player.position.x && _direction.dx > 0)){
+            [self stopped];
+        }else if (_location.x + 20 <= _player.position.x || _location.x - 20 >= _player.position.x){
+            [self updateMotion];
+        }
+
     }
 }
-
 
 -(void) updateMotion {
     if(_currentDirection.dx == _direction.dx){
@@ -225,7 +231,7 @@
         self.lastUpdateTimeInterval = currentTime;
     }
     if (self.isLive) {
-        [self checkLocation];
+        [self checkLocation:timeSinceLast];
     }
 }
 
