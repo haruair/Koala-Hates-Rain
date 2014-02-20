@@ -307,6 +307,7 @@ static const uint32_t koalaCategory    =  0x1 << 1;
     raindrop.physicsBody.dynamic = YES;
     raindrop.physicsBody.categoryBitMask = rainCategory;
     raindrop.physicsBody.contactTestBitMask = koalaCategory;
+    raindrop.physicsBody.collisionBitMask = 0;
     raindrop.physicsBody.usesPreciseCollisionDetection = YES;
 
     raindrop.position = CGPointMake(actualX, self.frame.size.height + raindrop.size.height / 2);

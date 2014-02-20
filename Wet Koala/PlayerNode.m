@@ -58,11 +58,12 @@
 }
 
 -(void) setPhysicsBodyCategoryMask:(uint32_t) playerCategory andContactMask:(uint32_t) targetCategory {
-    _player.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:_player.size];
+    _player.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:_player.size.width/3];
     _player.physicsBody.dynamic = YES;
     _player.physicsBody.categoryBitMask = playerCategory;
     _player.physicsBody.contactTestBitMask = targetCategory;
     _player.physicsBody.usesPreciseCollisionDetection = YES;
+    _player.physicsBody.collisionBitMask = 0;
     
 }
 
@@ -155,7 +156,8 @@
         if ((_location.x + 10 > _player.position.x && _direction.dx < 0) ||
             (_location.x - 10 < _player.position.x && _direction.dx > 0)){
             [self stopped];
-        }else if (_location.x + 20 <= _player.position.x || _location.x - 20 >= _player.position.x){
+        }else if ((_location.x + 20 <= _player.position.x && _direction.dx < 0) ||
+                  (_location.x - 20 >= _player.position.x && _direction.dx > 0)){
             [self updateMotion];
         }
 
