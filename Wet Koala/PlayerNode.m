@@ -113,7 +113,7 @@
 }
 
 -(BOOL) isMoved {
-    if ([_player actionForKey:@"player-walking"]) {
+    if ([_player actionForKey:@"player-move"]) {
         return YES;
     }
     return NO;
