@@ -135,8 +135,8 @@
     
     UITouch * touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
-    if (CGPointEqualToPoint(location, _player.position)) {
-        return;
+    if (location.x < _player.position.x  + 10.0 && location.x > _player.position.x - 10.0) {
+        _direction.dx = 0.0;
     } else {
         _direction.dx = 0.0;
         if (location.x > _player.position.x) {
@@ -153,11 +153,12 @@
     self.lastSpawnTimeInterval += timeSinceLast;
     if(self.lastSpawnTimeInterval >= 1.0 / 60.0){
         self.lastSpawnTimeInterval = 0;
-        if ((_location.x + 10 > _player.position.x && _direction.dx < 0) ||
-            (_location.x - 10 < _player.position.x && _direction.dx > 0)){
+        
+        if ((_currentDirection.dx < 0 && _player.position.x - 10 < _location.x) ||
+            (_currentDirection.dx > 0 && _player.position.x + 10 > _location.x) ||
+            (_direction.dx == 0 && _currentDirection.dx != 0)){
             [self stopped];
-        }else if ((_location.x + 20 <= _player.position.x && _direction.dx < 0) ||
-                  (_location.x - 20 >= _player.position.x && _direction.dx > 0)){
+        }else if (_direction.dx != 0 && _direction.dx != _currentDirection.dx){
             [self updateMotion];
         }
 
@@ -165,49 +166,46 @@
 }
 
 -(void) updateMotion {
-    if(_currentDirection.dx == _direction.dx){
-        return;
-    }else{
-        // set animation
-        [self moved];
-        
-        // set direction and move
-        CGPoint targetPoint = CGPointMake(0.0, 0.0);
-        
-        if(_direction.dx > 0){
-            targetPoint.x = self.parent.frame.size.width / 2;
-        }else if(_direction.dx < 0){
-            targetPoint.x = - self.parent.frame.size.width / 2;
-        }
-        
-        CGSize screenSize = self.parent.frame.size;
-        
-        float playerVelocity = screenSize.width / 1.3;
-        CGPoint moveDifference = CGPointMake(targetPoint.x - _player.position.x, targetPoint.y - _player.position.y);
-        float distanceToMove = sqrtf(moveDifference.x * moveDifference.x + moveDifference.y * moveDifference.y);
-        float moveDuration = distanceToMove / playerVelocity;
-
-        
-        SKAction * moveAction = [SKAction moveTo:targetPoint duration:moveDuration];
-        SKAction * doneAction = [SKAction runBlock:(dispatch_block_t)^(){
-            [self stopped];
-        }];
-        
-        SKAction * moveActionWithDone = [SKAction sequence:@[moveAction, doneAction]];
-        [_player runAction:moveActionWithDone withKey:@"player-move"];
-
-        // turn direction
-        if(_direction.dx * _player.xScale < 0){
-            _player.xScale = - _player.xScale;
-        }
-        // override new direction
-        _currentDirection = _direction;
+    // set animation
+    [self moved];
+    
+    // set direction and move
+    CGPoint targetPoint = CGPointMake(0.0, 0.0);
+    
+    if(_direction.dx > 0){
+        // go right
+        targetPoint.x = self.parent.frame.size.width / 2;
+    }else if(_direction.dx < 0){
+        // go left
+        targetPoint.x = - self.parent.frame.size.width / 2;
     }
+    
+    CGSize screenSize = self.parent.frame.size;
+    
+    float playerVelocity = screenSize.width / 1.3;
+    CGPoint moveDifference = CGPointMake(targetPoint.x - _player.position.x, targetPoint.y - _player.position.y);
+    float distanceToMove = sqrtf(moveDifference.x * moveDifference.x + moveDifference.y * moveDifference.y);
+    float moveDuration = distanceToMove / playerVelocity;
+
+    
+    SKAction * moveAction = [SKAction moveTo:targetPoint duration:moveDuration];
+    SKAction * doneAction = [SKAction runBlock:(dispatch_block_t)^(){
+        [self stopped];
+    }];
+    
+    SKAction * moveActionWithDone = [SKAction sequence:@[moveAction, doneAction]];
+    [_player runAction:moveActionWithDone withKey:@"player-move"];
+
+    // turn direction
+    if(_direction.dx * _player.xScale < 0){
+        _player.xScale = - _player.xScale;
+    }
+    // override new direction
+    _currentDirection = _direction;
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     if(self.isLive){
-        [self moved];
         [self directionUpdate:touches withEvent:event];
     }
 }
