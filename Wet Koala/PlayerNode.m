@@ -135,10 +135,18 @@
     
     UITouch * touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
-    if (location.x < _player.position.x  + 10.0 && location.x > _player.position.x - 10.0) {
-        _direction.dx = 0.0;
-    } else {
-        _direction.dx = 0.0;
+    if (
+        (
+         (location.x > _player.position.x  + _player.size.width / 3 ||
+          location.x < _player.position.x - _player.size.width / 3) &&
+         _direction.dx == 0
+         ) || (
+         (location.x > _player.position.x  + _player.size.width / 2 ||
+          location.x < _player.position.x - _player.size.width / 2) &&
+         _direction.dx != 0
+         )
+        
+        ) {
         if (location.x > _player.position.x) {
             _direction.dx = 1.0;
         }else if (location.x < _player.position.x) {
@@ -154,8 +162,8 @@
     if(self.lastSpawnTimeInterval >= 1.0 / 60.0){
         self.lastSpawnTimeInterval = 0;
         
-        if ((_currentDirection.dx < 0 && _player.position.x - 10 < _location.x) ||
-            (_currentDirection.dx > 0 && _player.position.x + 10 > _location.x) ||
+        if ((_currentDirection.dx < 0 && _player.position.x < _location.x) ||
+            (_currentDirection.dx > 0 && _player.position.x > _location.x) ||
             (_direction.dx == 0 && _currentDirection.dx != 0)){
             [self stopped];
         }else if (_direction.dx != 0 && _direction.dx != _currentDirection.dx){
