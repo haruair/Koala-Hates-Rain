@@ -18,6 +18,7 @@ static const uint32_t rainCategory     =  0x1 << 0;
 static const uint32_t koalaCategory    =  0x1 << 1;
 
 @interface GameScene()  <SKPhysicsContactDelegate>
+@property (nonatomic) NSDate * startTime;
 @property (nonatomic) NSTimeInterval lastSpawnTimeInterval;
 @property (nonatomic) NSTimeInterval lastUpdateTimeInterval;
 @property (nonatomic) SKTextureAtlas * atlas;
@@ -162,7 +163,11 @@ static const uint32_t koalaCategory    =  0x1 << 1;
                                             _raindrop = YES;
     }]]]];
     
+    [self setGameStartTime];
+}
 
+-(void) setGameStartTime {
+    _startTime = [NSDate date];
 }
 
 -(void) gameOver {
@@ -382,6 +387,17 @@ static const uint32_t koalaCategory    =  0x1 << 1;
     }
 }
 
+-(CGFloat) getFireTime {
+    CGFloat s = - ceil(_startTime.timeIntervalSinceNow);
+    CGFloat fireTime = 1.0;
+    if (s < 20) {
+        fireTime = (60 - 2 * s) * 0.01;
+    }else{
+        fireTime = 20 * 0.01;
+    }
+    return fireTime;
+}
+
 -(void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     [ButtonNode doButtonsActionEnded:self touches:touches withEvent:event];
     [_player touchesEnded:touches withEvent:event];
@@ -400,7 +416,7 @@ static const uint32_t koalaCategory    =  0x1 << 1;
 -(void)updateWithTimeSinceLastUpdate:(CFTimeInterval)timeSinceLast {
     if(_player.isLive && _raindrop){
         self.lastSpawnTimeInterval += timeSinceLast;
-        if(self.lastSpawnTimeInterval> 0.3){
+        if(self.lastSpawnTimeInterval > [self getFireTime]){
             self.lastSpawnTimeInterval = 0;
             [self addRaindrop];
         }
