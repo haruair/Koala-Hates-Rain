@@ -13,6 +13,9 @@
 		E52DF9BC18AF9F6900CE624C /* bgm.m4a in Resources */ = {isa = PBXBuildFile; fileRef = E52DF9BB18AF9F6900CE624C /* bgm.m4a */; };
 		E52DF9E318B0DA8500CE624C /* PlayerNode.m in Sources */ = {isa = PBXBuildFile; fileRef = E52DF9E218B0DA8500CE624C /* PlayerNode.m */; };
 		E52DF9E918B224D700CE624C /* GuideNode.m in Sources */ = {isa = PBXBuildFile; fileRef = E52DF9E818B224D700CE624C /* GuideNode.m */; };
+		E587416D18BA29320098CAD0 /* SSKeychain.strings in Resources */ = {isa = PBXBuildFile; fileRef = E587416718BA29320098CAD0 /* SSKeychain.strings */; };
+		E587416E18BA29320098CAD0 /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = E587416A18BA29320098CAD0 /* SSKeychain.m */; };
+		E587416F18BA29320098CAD0 /* SSKeychainQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = E587416C18BA29320098CAD0 /* SSKeychainQuery.m */; };
 		E59D79F618ABAABD00D70858 /* HomeScene.m in Sources */ = {isa = PBXBuildFile; fileRef = E59D79F518ABAABD00D70858 /* HomeScene.m */; };
 		E5A3EA1018AB60AC004336F3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5A3EA0F18AB60AC004336F3 /* Foundation.framework */; };
 		E5A3EA1218AB60AC004336F3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5A3EA1118AB60AC004336F3 /* CoreGraphics.framework */; };
@@ -55,6 +58,11 @@
 		E52DF9E218B0DA8500CE624C /* PlayerNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerNode.m; sourceTree = "<group>"; };
 		E52DF9E718B224D700CE624C /* GuideNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuideNode.h; sourceTree = "<group>"; };
 		E52DF9E818B224D700CE624C /* GuideNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuideNode.m; sourceTree = "<group>"; };
+		E587416818BA29320098CAD0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/SSKeychain.strings; sourceTree = "<group>"; };
+		E587416918BA29320098CAD0 /* SSKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychain.h; sourceTree = "<group>"; };
+		E587416A18BA29320098CAD0 /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychain.m; sourceTree = "<group>"; };
+		E587416B18BA29320098CAD0 /* SSKeychainQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychainQuery.h; sourceTree = "<group>"; };
+		E587416C18BA29320098CAD0 /* SSKeychainQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychainQuery.m; sourceTree = "<group>"; };
 		E59D79F418ABAABD00D70858 /* HomeScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeScene.h; sourceTree = "<group>"; };
 		E59D79F518ABAABD00D70858 /* HomeScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeScene.m; sourceTree = "<group>"; };
 		E5A3EA0C18AB60AC004336F3 /* Wet Koala.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Wet Koala.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -124,6 +132,26 @@
 			name = Sounds;
 			sourceTree = "<group>";
 		};
+		E587416518BA29320098CAD0 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				E587416618BA29320098CAD0 /* SSKeychain */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+		E587416618BA29320098CAD0 /* SSKeychain */ = {
+			isa = PBXGroup;
+			children = (
+				E587416718BA29320098CAD0 /* SSKeychain.strings */,
+				E587416918BA29320098CAD0 /* SSKeychain.h */,
+				E587416A18BA29320098CAD0 /* SSKeychain.m */,
+				E587416B18BA29320098CAD0 /* SSKeychainQuery.h */,
+				E587416C18BA29320098CAD0 /* SSKeychainQuery.m */,
+			);
+			path = SSKeychain;
+			sourceTree = "<group>";
+		};
 		E5A3EA0318AB60AC004336F3 = {
 			isa = PBXGroup;
 			children = (
@@ -159,6 +187,7 @@
 		E5A3EA1718AB60AC004336F3 /* Wet Koala */ = {
 			isa = PBXGroup;
 			children = (
+				E587416518BA29320098CAD0 /* Library */,
 				E52DF9B518AF9C7E00CE624C /* Sounds */,
 				E5A3EA2E18AB60AC004336F3 /* Images.xcassets */,
 				E52DF9AD18AF968900CE624C /* sprite.atlas */,
@@ -315,6 +344,7 @@
 			files = (
 				E52DF9B418AF9C7500CE624C /* button-out.m4a in Resources */,
 				E52DF9B318AF9C7500CE624C /* button-in.m4a in Resources */,
+				E587416D18BA29320098CAD0 /* SSKeychain.strings in Resources */,
 				E5A3EA1C18AB60AC004336F3 /* InfoPlist.strings in Resources */,
 				E5A3EA2F18AB60AC004336F3 /* Images.xcassets in Resources */,
 				E52DF9AE18AF968900CE624C /* sprite.atlas in Resources */,
@@ -340,6 +370,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5A3EA2B18AB60AC004336F3 /* GameScene.m in Sources */,
+				E587416F18BA29320098CAD0 /* SSKeychainQuery.m in Sources */,
 				E5A3EA2818AB60AC004336F3 /* ViewController.m in Sources */,
 				E52DF9E318B0DA8500CE624C /* PlayerNode.m in Sources */,
 				E52DF9E918B224D700CE624C /* GuideNode.m in Sources */,
@@ -348,6 +379,7 @@
 				E5A3EA1E18AB60AC004336F3 /* main.m in Sources */,
 				E5FA8CD718AE483C007ACF09 /* ButtonNode.m in Sources */,
 				E59D79F618ABAABD00D70858 /* HomeScene.m in Sources */,
+				E587416E18BA29320098CAD0 /* SSKeychain.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,6 +402,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		E587416718BA29320098CAD0 /* SSKeychain.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E587416818BA29320098CAD0 /* en */,
+			);
+			name = SSKeychain.strings;
+			sourceTree = "<group>";
+		};
 		E5A3EA1A18AB60AC004336F3 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (

@@ -13,6 +13,7 @@
 #import "PlayerNode.h"
 #import "ButtonNode.h"
 #import "GuideNode.h"
+#import "SSKeychain.h"
 
 static const uint32_t rainCategory     =  0x1 << 0;
 static const uint32_t koalaCategory    =  0x1 << 1;
@@ -276,10 +277,15 @@ static const uint32_t koalaCategory    =  0x1 << 1;
 }
 
 -(BOOL) storeHighScore:(int) score {
-    NSUserDefaults * record = [NSUserDefaults standardUserDefaults];
-    int highRecord = (int) [record integerForKey:@"highScore"];
+
+    int highRecord = 0;
+    
+    if ([SSKeychain passwordForService:@"koala" account:@"koala"] != nil) {
+        highRecord = [[SSKeychain passwordForService:@"koala" account:@"koala"] intValue];
+    }
+    
     if (highRecord < score) {
-        [record setInteger:score forKey:@"highScore"];
+        [SSKeychain setPassword:[NSString stringWithFormat:@"%d",score] forService:@"koala" account:@"koala"];
         
         ViewController * viewController = (ViewController *) self.view.window.rootViewController;
         if (viewController.gameCenterLogged) {
@@ -292,8 +298,11 @@ static const uint32_t koalaCategory    =  0x1 << 1;
 }
 
 -(int) getHighScore {
-    NSUserDefaults * record = [NSUserDefaults standardUserDefaults];
-    return (int) [record integerForKey:@"highScore"];
+    int highRecord = 0;
+    if ([SSKeychain passwordForService:@"koala" account:@"koala"] != nil) {
+        highRecord = [[SSKeychain passwordForService:@"koala" account:@"koala"] intValue];
+    }
+    return (int) highRecord;
 }
 
 -(void) addRaindrop {
