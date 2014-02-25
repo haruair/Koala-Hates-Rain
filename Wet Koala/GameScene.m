@@ -229,9 +229,15 @@ static const uint32_t koalaCategory    =  0x1 << 1;
     shareButton.position = CGPointMake(CGRectGetMidX(self.frame) + (shareButton.size.width / 2 + 8), buttonY);
     
     [shareButton setMethod: ^ (void) {
-        ViewController * viewController = (ViewController *) self.view.window.rootViewController;
         NSString * sharetext = [NSString stringWithFormat:@"I just scored %d in #KoalaHatesRain!", (int) [_counter getNumber]];
-        [viewController shareText:sharetext andImage:nil];
+        
+        UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, NO, 1.0);
+        [self.view drawViewHierarchyInRect:self.frame afterScreenUpdates:NO];
+        UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        ViewController * viewController = (ViewController *) self.view.window.rootViewController;
+        [viewController shareText:sharetext andImage:image];
     } ];
     
     [self addChild:gameOverText];
