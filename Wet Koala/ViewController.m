@@ -20,6 +20,7 @@
 @implementation ViewController
 {
     NSString * _leaderboardIdentifier;
+    NSUserDefaults * _settings;
 }
 - (void)viewWillLayoutSubviews
 {
@@ -37,13 +38,24 @@
     SKView * skView = (SKView *)self.view;
     if (!skView.scene) {
         
-        // Add Background Music
+        _settings = [NSUserDefaults standardUserDefaults];
+        
+        if([_settings objectForKey:@"sound"] == nil){
+            [_settings setObject:@"YES" forKey:@"sound"];
+        }
+        
+        NSString * musicPlaySetting = [_settings objectForKey:@"sound"];
+        
         NSError *error;
         NSURL * backgroundMusicURL = [[NSBundle mainBundle] URLForResource:@"bgm" withExtension:@"m4a"];
         self.backgroundMusicPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:backgroundMusicURL error:&error];
         self.backgroundMusicPlayer.numberOfLoops = -1;
         [self.backgroundMusicPlayer prepareToPlay];
-        [self.backgroundMusicPlayer play];
+        
+        if ([musicPlaySetting isEqualToString:@"YES"]) {
+            // Add Background Music
+            [self.backgroundMusicPlayer play];
+        }
         
         skView.showsFPS = NO;
         skView.showsNodeCount = NO;
@@ -61,6 +73,36 @@
     }
     
 
+}
+
+-(void) turnOffSound
+{
+    [self.backgroundMusicPlayer stop];
+    [_settings setObject:@"NO" forKey:@"sound"];
+}
+
+-(void) turnOnSound
+{
+    [self.backgroundMusicPlayer play];
+    [_settings setObject:@"YES" forKey:@"sound"];
+}
+
+-(void) switchSound
+{
+    if ([self isSound]) {
+        [self turnOffSound];
+    }else{
+        [self turnOnSound];
+    }
+}
+
+-(BOOL) isSound {
+    NSString * musicPlaySetting = [_settings objectForKey:@"sound"];
+    if ([musicPlaySetting isEqualToString:@"YES"]){
+        return YES;
+    }else{
+        return NO;
+    }
 }
 
 - (void) showGameCenterLeaderBoard

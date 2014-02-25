@@ -64,6 +64,26 @@
         [scoreButton setMethod: ^ (void) { [self scoreButtonPressed]; } ];
         [self addChild:scoreButton];
 
+        
+        SKTexture * musicDefault = [atlas textureNamed:@"button-music-off"];
+        SKTexture * musicTouched = [atlas textureNamed:@"button-music-on"];
+        
+        ButtonNode * musicButton = [[ButtonNode alloc] initWithDefaultTexture:musicDefault andTouchedTexture:musicTouched];
+        
+        if(self.frame.size.height > 500.0){
+            musicButton.position = CGPointMake(CGRectGetMidX(self.frame),
+                                               buttonY + scoreButton.size.height);
+        }else{
+            musicButton.position = CGPointMake(CGRectGetMidX(self.frame),
+                                               CGRectGetMinY(self.frame) + musicButton.size.height * 2 / 3);
+        }
+        [musicButton setMethod: ^ (void) {
+            ViewController * viewController = (ViewController *) self.view.window.rootViewController;
+            [viewController switchSound];
+        }];
+        
+        [self addChild:musicButton];
+        
     }
     return self;
 }

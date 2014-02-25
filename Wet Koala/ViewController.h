@@ -14,6 +14,12 @@
 
 @property (nonatomic) BOOL gameCenterLogged;
 - (void) showGameCenterLeaderBoard;
+
+-(void) turnOffSound;
+-(void) turnOnSound;
+-(void) switchSound;
+-(BOOL) isSound;
+
 - (void) shareText:(NSString *)string andImage:(UIImage *)image;
 - (void) reportScore: (int64_t) score;
 @end
