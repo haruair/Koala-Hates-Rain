@@ -45,8 +45,6 @@
         }
         
         NSString * musicPlaySetting = [_settings objectForKey:@"sound"];
-
-        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryAmbient error:nil];
         
         NSError *error;
         NSURL * backgroundMusicURL = [[NSBundle mainBundle] URLForResource:@"bgm" withExtension:@"m4a"];
@@ -80,12 +78,14 @@
 
 -(void) turnOffSound
 {
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryAmbient error:nil];
     [self.backgroundMusicPlayer stop];
     [_settings setObject:@"NO" forKey:@"sound"];
 }
 
 -(void) turnOnSound
 {
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategorySoloAmbient error:nil];
     [self.backgroundMusicPlayer play];
     [_settings setObject:@"YES" forKey:@"sound"];
 }
