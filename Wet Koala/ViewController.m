@@ -37,6 +37,7 @@
     // Configure the view.
     SKView * skView = (SKView *)self.view;
     if (!skView.scene) {
+        [self authenticateLocalPlayer];
         
         _settings = [NSUserDefaults standardUserDefaults];
         
@@ -70,7 +71,6 @@
         
         // Present the scene.
         [skView presentScene:scene];
-        [self authenticateLocalPlayer];
     }
     
 
@@ -110,12 +110,16 @@
 
 - (void) showGameCenterLeaderBoard
 {
-    GKGameCenterViewController *gameCenterController = [[GKGameCenterViewController alloc] init];
-    if (gameCenterController != nil)
-    {
-        gameCenterController.gameCenterDelegate = self;
-        gameCenterController.viewState = GKGameCenterViewControllerStateLeaderboards;
-        [self presentViewController: gameCenterController animated: YES completion:nil];
+    if(self.gameCenterLogged){
+        GKGameCenterViewController *gameCenterController = [[GKGameCenterViewController alloc] init];
+        if (gameCenterController != nil)
+        {
+            gameCenterController.gameCenterDelegate = self;
+            gameCenterController.viewState = GKGameCenterViewControllerStateLeaderboards;
+            [self presentViewController: gameCenterController animated: YES completion:nil];
+        }
+    }else{
+        [self showAuthenticationDialogWhenReasonable];
     }
 }
 
@@ -145,7 +149,7 @@
         
         if (viewController != nil)
         {
-            [self showAuthenticationDialogWhenReasonable: viewController];
+            [self showAuthenticationDialogWhenReasonable];
         }
         else if (weakPlayer.isAuthenticated)
         {
@@ -158,7 +162,7 @@
     };
 }
 
--(void) showAuthenticationDialogWhenReasonable:(UIViewController *) viewController {
+-(void) showAuthenticationDialogWhenReasonable {
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"gamecenter:"]];
 }
 
