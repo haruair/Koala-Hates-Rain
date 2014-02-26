@@ -58,7 +58,23 @@
 }
 
 -(void) setPhysicsBodyCategoryMask:(uint32_t) playerCategory andContactMask:(uint32_t) targetCategory {
-    _player.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:_player.size.width/3];
+
+    CGFloat offsetX = _player.frame.size.width / 2 * _player.anchorPoint.x;
+    CGFloat offsetY = _player.frame.size.height / 2 * _player.anchorPoint.y;
+    
+    CGMutablePathRef path = CGPathCreateMutable();
+    
+    CGPathMoveToPoint(path, NULL, 34 - offsetX, 45 - offsetY);
+    CGPathAddLineToPoint(path, NULL, 35 - offsetX, 12 - offsetY);
+    CGPathAddLineToPoint(path, NULL, 25 - offsetX, 1 - offsetY);
+    CGPathAddLineToPoint(path, NULL, 10 - offsetX, 1 - offsetY);
+    CGPathAddLineToPoint(path, NULL, 0 - offsetX, 13 - offsetY);
+    CGPathAddLineToPoint(path, NULL, 0 - offsetX, 44 - offsetY);
+
+    CGPathCloseSubpath(path);
+    
+    _player.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:path];
+    
     _player.physicsBody.dynamic = YES;
     _player.physicsBody.categoryBitMask = playerCategory;
     _player.physicsBody.contactTestBitMask = targetCategory;
