@@ -49,6 +49,10 @@
     return self;
 }
 
+-(CGPoint) position {
+    return _player.position;
+}
+
 -(void) setEndedTexture:(SKTexture *) endedTexture {
     _endedTexture = endedTexture;
 }

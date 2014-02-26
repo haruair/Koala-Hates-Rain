@@ -365,6 +365,15 @@ static const uint32_t koalaCategory    =  0x1 << 1;
     SKSpriteNode * raindrop = [SKSpriteNode spriteNodeWithTexture:temp];
     int minX = raindrop.size.width / 2;
     int maxX = self.frame.size.width - raindrop.size.width / 2;
+
+    CGFloat s = - ceil(_startTime.timeIntervalSinceNow);
+    if ((s < 20 && [_counter getNumber] % 4 == 0) ||
+        (s >= 20 && [_counter getNumber] % 8 == 0)) {
+        int x = [_player position].x + self.frame.size.width / 2;
+        minX = x - 10.0;
+        maxX = x + 10.0;
+    }
+    
     int rangeX = maxX - minX;
     int actualX = (arc4random() % rangeX) + minX;
     
