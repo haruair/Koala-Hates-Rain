@@ -288,13 +288,33 @@ static const uint32_t koalaCategory    =  0x1 << 1;
         [viewController shareText:sharetext andImage:image];
     } ];
     
+    
+    SKTexture * rateDefault = [_atlas textureNamed:@"button-rate-off"];
+    SKTexture * rateTouched = [_atlas textureNamed:@"button-rate-on"];
+    
+    ButtonNode * rateButton = [[ButtonNode alloc] initWithDefaultTexture:rateDefault andTouchedTexture:rateTouched];
+    rateButton.position = CGPointMake(CGRectGetMidX(self.frame), buttonY - homeButton.size.height);
+    
+    [rateButton setMethod: ^ (void) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:
+                                                    @"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=824136867"
+                                                    ]];
+
+    } ];
+    
     [self addChild:gameOverText];
     [self addChild:scoreBoard];
     
     SKAction * buttonMove = [SKAction sequence:@[
                                                  [SKAction moveToY:buttonY - 10.0 duration:0.0],
                                                  [SKAction group:@[[SKAction fadeInWithDuration:0.3], [SKAction moveToY:buttonY duration:0.5]]
-                                                 ]]];
+                                                  ]]];
+    
+    SKAction * rateButtonMove = [SKAction sequence:@[
+                                                 [SKAction waitForDuration:0.3],
+                                                 [SKAction moveToY:buttonY - homeButton.size.height - 10.0 duration:0.0],
+                                                 [SKAction group:@[[SKAction fadeInWithDuration:0.3], [SKAction moveToY:buttonY - homeButton.size.height duration:0.5]]
+                                                  ]]];
     
     gameOverText.alpha = 0.0;
     scoreBoard.alpha = 0.0;
@@ -324,8 +344,14 @@ static const uint32_t koalaCategory    =  0x1 << 1;
         shareButton.alpha = 0.0;
         [self addChild:homeButton];
         [self addChild:shareButton];
+        
+        rateButton.alpha = 0.0;
+        [self addChild:rateButton];
+        
         [homeButton runAction:buttonMove];
         [shareButton runAction:buttonMove];
+        
+        [rateButton runAction:rateButtonMove];
     }]]]];
 
 }
