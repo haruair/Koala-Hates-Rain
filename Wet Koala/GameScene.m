@@ -228,15 +228,63 @@ static const uint32_t koalaCategory    =  0x1 << 1;
     ButtonNode * shareButton = [[ButtonNode alloc] initWithDefaultTexture:shareDefault andTouchedTexture:shareTouched];
     shareButton.position = CGPointMake(CGRectGetMidX(self.frame) + (shareButton.size.width / 2 + 8), buttonY);
     
+    // prepare share action
+    UIImage * pointboard = [UIImage imageNamed:@"pointboard.jpg"];
+    
+    NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    [style setAlignment:NSTextAlignmentRight];
+
+    UIFont * font = [UIFont fontWithName:@"Molot" size:40.0];
+    
+    NSShadow * fontBackgroundShadow = [[NSShadow alloc] init];
+    fontBackgroundShadow.shadowBlurRadius = 0.0;
+    fontBackgroundShadow.shadowColor = [UIColor colorWithRed:98.0/256.0
+                                                       green:93.0/256.0
+                                                        blue:89.0/256.0
+                                                       alpha:1.0];
+    fontBackgroundShadow.shadowOffset = CGSizeMake(0.0, 5.0);
+    
+    NSDictionary * fontBackgroundAtts = @{ NSFontAttributeName : font,
+                                           NSParagraphStyleAttributeName : style,
+                                           NSStrokeColorAttributeName : [UIColor whiteColor],
+                                           NSStrokeWidthAttributeName : @-20.0f,
+                                           NSShadowAttributeName : fontBackgroundShadow
+                                           };
+    
+    NSDictionary * fontAtts = @{ NSFontAttributeName : font,
+                                 NSForegroundColorAttributeName : [UIColor colorWithRed:86.0/256.0
+                                                                                  green:86.0/256.0
+                                                                                   blue:86.0/256.0
+                                                                                  alpha:1.0],
+                                 NSParagraphStyleAttributeName : style
+                                 };
+    
+    CGRect usernameRect = CGRectMake(600.0, 185.0, 220.0, 200.0);
+    CGRect scoreRect = CGRectMake(600.0, 262.0, 220.0, 200.0);
+    
     [shareButton setMethod: ^ (void) {
-        NSString * sharetext = [NSString stringWithFormat:@"I just scored %d in #KoalaHatesRain!", (int) [_counter getNumber]];
-        
-        UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, NO, 1.0);
-        [self.view drawViewHierarchyInRect:self.frame afterScreenUpdates:NO];
-        UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
         
         ViewController * viewController = (ViewController *) self.view.window.rootViewController;
+        
+        NSString * sharetext = [NSString stringWithFormat:@"I just scored %d in #KoalaHatesRain!", (int) [_counter getNumber]];
+
+        UIGraphicsBeginImageContext(pointboard.size);
+        
+        [pointboard drawInRect:CGRectMake(0,0,pointboard.size.width, pointboard.size.height)];
+        
+        GKPlayer * localPlayer = [viewController localPlayer];
+        NSString * username = localPlayer.alias;
+        
+        [username drawInRect:CGRectIntegral(usernameRect) withAttributes: fontBackgroundAtts];
+        [username drawInRect:CGRectIntegral(usernameRect) withAttributes: fontAtts];
+        
+        NSString * score = [NSString stringWithFormat:@"%d", (int)[_counter getNumber]];
+        [score drawInRect:CGRectIntegral(scoreRect) withAttributes: fontBackgroundAtts];
+        [score drawInRect:CGRectIntegral(scoreRect) withAttributes: fontAtts];
+        
+        UIImage * image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
         [viewController shareText:sharetext andImage:image];
     } ];
     

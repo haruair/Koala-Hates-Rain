@@ -14,7 +14,6 @@
 
 @interface ViewController() <GKGameCenterControllerDelegate>
 @property (nonatomic) AVAudioPlayer * backgroundMusicPlayer;
-@property (nonatomic) GKLocalPlayer * localPlayer;
 @end
 
 @implementation ViewController

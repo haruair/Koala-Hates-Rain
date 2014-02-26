@@ -13,6 +13,8 @@
 @interface ViewController : UIViewController
 
 @property (nonatomic) BOOL gameCenterLogged;
+@property (nonatomic) GKLocalPlayer * localPlayer;
+
 - (void) showGameCenterLeaderBoard;
 
 -(void) turnOffSound;
