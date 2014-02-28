@@ -430,8 +430,10 @@ static const uint32_t koalaCategory    =  0x1 << 1;
     int maxDuration = 20;
     
     if(s >= 40 && _rainCount % 8 == 0){
+        minDuration = 20;
         maxDuration = 30;
     }else if(s >= 20 && _rainCount % 6 == 0){
+        minDuration = 20;
         maxDuration = 25;
     }
     
