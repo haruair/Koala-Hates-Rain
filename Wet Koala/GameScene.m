@@ -490,8 +490,10 @@ static const uint32_t koalaCategory    =  0x1 << 1;
     CGFloat fireTime = 1.0;
     if (s < 20) {
         fireTime = (60 - 2 * s) * 0.01;
-    }else{
-        fireTime = 20 * 0.01;
+    }else if(s < 100){
+        fireTime = (30 - s * 0.2) * 0.01;
+    }else {
+        fireTime = 0.1;
     }
     return fireTime;
 }
