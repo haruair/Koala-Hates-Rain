@@ -34,6 +34,7 @@ static const uint32_t koalaCategory    =  0x1 << 1;
     SKSpriteNode   * _score;
     GuideNode      * _guide;
     
+    int _rainCount;
     BOOL _raindrop;
 }
 
@@ -136,6 +137,8 @@ static const uint32_t koalaCategory    =  0x1 << 1;
 }
 
 -(void) gameStart {
+    
+    _rainCount = 0;
     
     // set count
     SKSpriteNode * score = [SKSpriteNode spriteNodeWithTexture:[_atlas textureNamed:@"score"]];
@@ -393,8 +396,8 @@ static const uint32_t koalaCategory    =  0x1 << 1;
     int maxX = self.frame.size.width - raindrop.size.width / 2;
 
     CGFloat s = - ceil(_startTime.timeIntervalSinceNow);
-    if ((s < 20 && [_counter getNumber] % 4 == 0) ||
-        (s >= 20 && [_counter getNumber] % 8 == 0)) {
+    if ((s < 20 && _rainCount % 4 == 0) ||
+        (s >= 20 && _rainCount % 4 == 0)) {
         int x = [_player position].x + self.frame.size.width / 2;
         minX = x - 10.0;
         maxX = x + 10.0;
@@ -423,10 +426,17 @@ static const uint32_t koalaCategory    =  0x1 << 1;
     
     [self addChild:raindrop];
     
-    int minDuration = 1.0;
-    int maxDuration = 2.0;
+    int minDuration = 10;
+    int maxDuration = 20;
+    
+    if(s >= 40 && _rainCount % 8 == 0){
+        maxDuration = 30;
+    }else if(s >= 20 && _rainCount % 6 == 0){
+        maxDuration = 25;
+    }
+    
     int rangeDuration = maxDuration - minDuration;
-    int actualDuration = (arc4random() % rangeDuration) + minDuration;
+    float actualDuration = ((arc4random() % rangeDuration) + minDuration) / 10;
     
     SKAction * actionMove = [SKAction moveTo:CGPointMake(actualX, _ground.position.y + _ground.size.height)
                                     duration:actualDuration];
@@ -436,6 +446,7 @@ static const uint32_t koalaCategory    =  0x1 << 1;
     SKAction * actionMoveDone = [SKAction removeFromParent];
     
     [raindrop runAction:[SKAction sequence:@[actionMove, countMove, actionMoveDone]] withKey:@"rain"];
+    _rainCount++;
 }
 
 -(void) stopAllRaindrop{
@@ -488,12 +499,10 @@ static const uint32_t koalaCategory    =  0x1 << 1;
 -(CGFloat) getFireTime {
     CGFloat s = - ceil(_startTime.timeIntervalSinceNow);
     CGFloat fireTime = 1.0;
-    if (s < 20) {
-        fireTime = (60 - 2 * s) * 0.01;
-    }else if(s < 100){
-        fireTime = (30 - s * 0.2) * 0.01;
+    if (s < 15) {
+        fireTime = (25 - s) * 0.02;
     }else {
-        fireTime = 0.1;
+        fireTime = 0.2;
     }
     return fireTime;
 }
