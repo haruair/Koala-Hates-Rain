@@ -521,10 +521,6 @@ static const uint32_t koalaCategory    =  0x1 << 1;
     }
 }
 
--(void) didSimulatePhysics {
-    [_player setPhysicsBodyCategoryMask:koalaCategory andContactMask:rainCategory];
-}
-
 -(void)update:(CFTimeInterval)currentTime {
     /* Called before each frame is rendered */
     CFTimeInterval timeSinceLast = currentTime - self.lastUpdateTimeInterval;

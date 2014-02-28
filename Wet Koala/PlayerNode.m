@@ -15,7 +15,10 @@
 
 @implementation PlayerNode
 {
-    SKSpriteNode * _player;
+    SKShapeNode * _player;
+    SKSpriteNode * _playerNode;
+    SKShapeNode * _physicsNode;
+    
     SKTexture * _defaultTexture;
     SKTexture * _endedTexture;
     SKTexture * _endedAdditionalTexture;
@@ -23,28 +26,54 @@
     CGPoint _location;
     CGVector _direction;
     CGVector _currentDirection;
+    CGMutablePathRef _path;
 }
 
 -(id) initWithDefaultTexture:(SKTexture *)defaultTexture andAnimateTextures:(NSArray *)animateTextures {
     self = [super init];
     if (self) {
+        
+        self.isLive = YES;
+        
         _defaultTexture = defaultTexture;
         _animateTextures = animateTextures;
         
         _direction = CGVectorMake(0.0, 0.0);
         _currentDirection = CGVectorMake(0.0, 0.0);
         
-        _player = [SKSpriteNode spriteNodeWithTexture:_defaultTexture];
-        self.isLive = YES;
+        _player = [[SKShapeNode alloc] init];
+        _playerNode = [SKSpriteNode spriteNodeWithTexture:_defaultTexture];
         
-        [self addChild:_player];
+        [_player addChild:_playerNode];
         
-        [_player runAction:[SKAction repeatActionForever:
+        [_playerNode runAction:[SKAction repeatActionForever:
                             [SKAction animateWithTextures:@[_defaultTexture]
                                              timePerFrame:0.1f
                                                    resize:YES
                                                   restore:YES]] withKey:@"player-default"];
         
+        CGFloat offsetX = _playerNode.frame.size.width / 2 * _playerNode.anchorPoint.x;
+        CGFloat offsetY = _playerNode.frame.size.height / 2 * _playerNode.anchorPoint.y;
+        
+        CGMutablePathRef path = CGPathCreateMutable();
+        
+        CGPathMoveToPoint(path, NULL, 34 - offsetX, 45 - offsetY);
+        CGPathAddLineToPoint(path, NULL, 35 - offsetX, 12 - offsetY);
+        CGPathAddLineToPoint(path, NULL, 25 - offsetX, 1 - offsetY);
+        CGPathAddLineToPoint(path, NULL, 10 - offsetX, 1 - offsetY);
+        CGPathAddLineToPoint(path, NULL, 0 - offsetX, 13 - offsetY);
+        CGPathAddLineToPoint(path, NULL, 0 - offsetX, 44 - offsetY);
+        
+        CGPathCloseSubpath(path);
+        _path = path;
+        
+        _physicsNode = [[SKShapeNode alloc] init];
+        _physicsNode.path = path;
+        _physicsNode.lineWidth = 0.0;
+        
+        [_player addChild:_physicsNode];
+        [self addChild:_player];
+
     }
     return self;
 }
@@ -62,36 +91,21 @@
 }
 
 -(void) setPhysicsBodyCategoryMask:(uint32_t) playerCategory andContactMask:(uint32_t) targetCategory {
-
-    CGFloat offsetX = _player.frame.size.width / 2 * _player.anchorPoint.x;
-    CGFloat offsetY = _player.frame.size.height / 2 * _player.anchorPoint.y;
-    
-    CGMutablePathRef path = CGPathCreateMutable();
-    
-    CGPathMoveToPoint(path, NULL, 34 - offsetX, 45 - offsetY);
-    CGPathAddLineToPoint(path, NULL, 35 - offsetX, 12 - offsetY);
-    CGPathAddLineToPoint(path, NULL, 25 - offsetX, 1 - offsetY);
-    CGPathAddLineToPoint(path, NULL, 10 - offsetX, 1 - offsetY);
-    CGPathAddLineToPoint(path, NULL, 0 - offsetX, 13 - offsetY);
-    CGPathAddLineToPoint(path, NULL, 0 - offsetX, 44 - offsetY);
-
-    CGPathCloseSubpath(path);
-    
-    _player.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:path];
-    
-    _player.physicsBody.dynamic = YES;
-    _player.physicsBody.categoryBitMask = playerCategory;
-    _player.physicsBody.contactTestBitMask = targetCategory;
-    _player.physicsBody.usesPreciseCollisionDetection = YES;
-    _player.physicsBody.collisionBitMask = 0;
+    _physicsNode.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:_path];
+    _physicsNode.physicsBody.allowsRotation = YES;
+    _physicsNode.physicsBody.dynamic = YES;
+    _physicsNode.physicsBody.categoryBitMask = playerCategory;
+    _physicsNode.physicsBody.contactTestBitMask = targetCategory;
+    _physicsNode.physicsBody.usesPreciseCollisionDetection = YES;
+    _physicsNode.physicsBody.collisionBitMask = 0;
     
 }
 
 -(void) moved {
-    if ([_player actionForKey:@"player-walking"]) {
-        [_player removeActionForKey:@"player-walking"];
+    if ([_playerNode actionForKey:@"player-walking"]) {
+        [_playerNode removeActionForKey:@"player-walking"];
     }
-    [_player runAction:[SKAction repeatActionForever:
+    [_playerNode runAction:[SKAction repeatActionForever:
                         [SKAction animateWithTextures:_animateTextures
                                          timePerFrame:0.1f
                                                resize:YES
@@ -107,20 +121,20 @@
         
         SKSpriteNode * effect = [SKSpriteNode spriteNodeWithTexture:_endedAdditionalTexture];
         effect.alpha = 0.0;
-        [_player insertChild:effect atIndex:0];
+        [_playerNode insertChild:effect atIndex:0];
         [effect runAction:[SKAction sequence:@[[SKAction scaleBy:0.1 duration:0.0],
                                                [SKAction group:@[[SKAction fadeInWithDuration:0.1], [SKAction scaleBy:20.0 duration:0.2]]],
                                                [SKAction group:@[[SKAction fadeOutWithDuration:0.4]]],
                                                
                                                [SKAction runBlock:^{
             [effect removeFromParent];
-            _player.zPosition = 0.0;
+            _playerNode.zPosition = 0.0;
         }]]]];
     }
     
     if (_endedTexture != nil) {
-        [_player runAction:[SKAction waitForDuration:0.2] completion:^{
-            [_player runAction:
+        [_playerNode runAction:[SKAction waitForDuration:0.2] completion:^{
+            [_playerNode runAction:
              [SKAction repeatActionForever:
               [SKAction animateWithTextures:@[_endedTexture]
                                timePerFrame:0.1f
@@ -133,7 +147,7 @@
 }
 
 -(BOOL) isMoved {
-    if ([_player actionForKey:@"player-move"]) {
+    if ([_playerNode actionForKey:@"player-move"]) {
         return YES;
     }
     return NO;
@@ -143,8 +157,8 @@
     _direction.dx = 0.0;
     _currentDirection.dx = 0.0;
     
-    if ([_player actionForKey:@"player-walking"]) {
-        [_player removeActionForKey:@"player-walking"];
+    if ([_playerNode actionForKey:@"player-walking"]) {
+        [_playerNode removeActionForKey:@"player-walking"];
     }
     if ([_player actionForKey:@"player-move"]) {
         [_player removeActionForKey:@"player-move"];
@@ -157,12 +171,12 @@
     CGPoint location = [touch locationInNode:self];
     if (
         (
-         (location.x > _player.position.x  + _player.size.width / 3 ||
-          location.x < _player.position.x - _player.size.width / 3) &&
+         (location.x > _player.position.x  + _playerNode.size.width / 3 ||
+          location.x < _player.position.x - _playerNode.size.width / 3) &&
          _direction.dx == 0
          ) || (
-         (location.x > _player.position.x  + _player.size.width / 2 ||
-          location.x < _player.position.x - _player.size.width / 2) &&
+         (location.x > _player.position.x  + _playerNode.size.width / 2 ||
+          location.x < _player.position.x - _playerNode.size.width / 2) &&
          _direction.dx != 0
          )
         
@@ -225,8 +239,8 @@
     [_player runAction:moveActionWithDone withKey:@"player-move"];
 
     // turn direction
-    if(_direction.dx * _player.xScale < 0){
-        _player.xScale = - _player.xScale;
+    if(_direction.dx * _playerNode.xScale < 0){
+        _playerNode.xScale = - _playerNode.xScale;
     }
     // override new direction
     _currentDirection = _direction;
