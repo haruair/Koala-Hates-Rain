@@ -298,7 +298,7 @@ static const uint32_t koalaCategory    =  0x1 << 1;
     SKTexture * rateTouched = [_atlas textureNamed:@"button-rate-on"];
     
     ButtonNode * rateButton = [[ButtonNode alloc] initWithDefaultTexture:rateDefault andTouchedTexture:rateTouched];
-    rateButton.position = CGPointMake(CGRectGetMidX(self.frame) + rateButton.size.width / 2 + 5, smallButtonY);
+    rateButton.position = CGPointMake(CGRectGetMidX(self.frame) + rateButton.size.width / 2 + 8, smallButtonY);
     
     [rateButton setMethod: ^ (void) {
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:
@@ -311,7 +311,7 @@ static const uint32_t koalaCategory    =  0x1 << 1;
     SKTexture * retryTouched = [_atlas textureNamed:@"button-retry-on"];
     
     ButtonNode * retryButton = [[ButtonNode alloc] initWithDefaultTexture:retryDefault andTouchedTexture:retryTouched];
-    retryButton.position = CGPointMake(CGRectGetMidX(self.frame) - retryButton.size.width / 2 - 5, smallButtonY);
+    retryButton.position = CGPointMake(CGRectGetMidX(self.frame) - retryButton.size.width / 2 - 8, smallButtonY);
     
     [retryButton setMethod: ^ (void) {
         SKTransition * reveal = [SKTransition fadeWithColor:[UIColor whiteColor] duration:0.5];
