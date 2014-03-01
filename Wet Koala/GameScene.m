@@ -423,6 +423,12 @@ static const uint32_t koalaCategory    =  0x1 << 1;
     int rangeX = maxX - minX;
     int actualX = (arc4random() % rangeX) + minX;
     
+    if (actualX > self.frame.size.width - raindrop.size.width / 2) {
+        actualX = self.frame.size.width - raindrop.size.width / 2;
+    }else if (actualX < raindrop.size.width / 2) {
+        actualX = raindrop.size.width / 2;
+    }
+    
     raindrop.name = @"raindrop";
     
     // set raindrop physicsbody
