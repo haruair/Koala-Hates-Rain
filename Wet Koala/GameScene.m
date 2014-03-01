@@ -262,8 +262,8 @@ static const uint32_t koalaCategory    =  0x1 << 1;
                                  NSParagraphStyleAttributeName : style
                                  };
     
-    CGRect usernameRect = CGRectMake(600.0, 185.0, 220.0, 200.0);
-    CGRect scoreRect = CGRectMake(600.0, 262.0, 220.0, 200.0);
+    CGRect usernameRect = CGRectMake(600.0, 185.0, 220.0, 80.0);
+    CGRect scoreRect = CGRectMake(600.0, 262.0, 220.0, 80.0);
     
     [shareButton setMethod: ^ (void) {
         
