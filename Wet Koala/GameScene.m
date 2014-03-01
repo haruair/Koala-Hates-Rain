@@ -292,17 +292,31 @@ static const uint32_t koalaCategory    =  0x1 << 1;
     } ];
     
     
+    CGFloat smallButtonY = buttonY - homeButton.size.height;
+    
     SKTexture * rateDefault = [_atlas textureNamed:@"button-rate-off"];
     SKTexture * rateTouched = [_atlas textureNamed:@"button-rate-on"];
     
     ButtonNode * rateButton = [[ButtonNode alloc] initWithDefaultTexture:rateDefault andTouchedTexture:rateTouched];
-    rateButton.position = CGPointMake(CGRectGetMidX(self.frame), buttonY - homeButton.size.height);
+    rateButton.position = CGPointMake(CGRectGetMidX(self.frame) + rateButton.size.width / 2 + 5, smallButtonY);
     
     [rateButton setMethod: ^ (void) {
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:
                                                     @"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=824136867"
                                                     ]];
 
+    } ];
+    
+    SKTexture * retryDefault = [_atlas textureNamed:@"button-retry-off"];
+    SKTexture * retryTouched = [_atlas textureNamed:@"button-retry-on"];
+    
+    ButtonNode * retryButton = [[ButtonNode alloc] initWithDefaultTexture:retryDefault andTouchedTexture:retryTouched];
+    retryButton.position = CGPointMake(CGRectGetMidX(self.frame) - retryButton.size.width / 2 - 5, smallButtonY);
+    
+    [retryButton setMethod: ^ (void) {
+        SKTransition * reveal = [SKTransition fadeWithColor:[UIColor whiteColor] duration:0.5];
+        SKScene * gameScene = [[GameScene alloc] initWithSize:self.size];
+        [self.view presentScene:gameScene transition:reveal];
     } ];
     
     [self addChild:gameOverText];
@@ -313,7 +327,7 @@ static const uint32_t koalaCategory    =  0x1 << 1;
                                                  [SKAction group:@[[SKAction fadeInWithDuration:0.3], [SKAction moveToY:buttonY duration:0.5]]
                                                   ]]];
     
-    SKAction * rateButtonMove = [SKAction sequence:@[
+    SKAction * smallButtonMove = [SKAction sequence:@[
                                                  [SKAction waitForDuration:0.3],
                                                  [SKAction moveToY:buttonY - homeButton.size.height - 10.0 duration:0.0],
                                                  [SKAction group:@[[SKAction fadeInWithDuration:0.3], [SKAction moveToY:buttonY - homeButton.size.height duration:0.5]]
@@ -349,12 +363,15 @@ static const uint32_t koalaCategory    =  0x1 << 1;
         [self addChild:shareButton];
         
         rateButton.alpha = 0.0;
+        retryButton.alpha = 0.0;
         [self addChild:rateButton];
+        [self addChild:retryButton];
         
         [homeButton runAction:buttonMove];
         [shareButton runAction:buttonMove];
         
-        [rateButton runAction:rateButtonMove];
+        [rateButton runAction:smallButtonMove];
+        [retryButton runAction:smallButtonMove];
     }]]]];
 
 }
