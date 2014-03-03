@@ -1,0 +1,198 @@
+/*
+<<Koala Hates Rain>>
+by haruair http://haruair.com
+*/
+@font-face {
+    font-family: 'molotregular';
+    src: url('Molot-webfont.eot');
+    src: url('Molot-webfont.eot?#iefix') format('embedded-opentype'),
+         url('Molot-webfont.woff') format('woff'),
+         url('Molot-webfont.ttf') format('truetype'),
+         url('Molot-webfont.svg#molotregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  max-width: 100%;
+}
+
+body {
+  font-family: helvetica, arial, sans-serif;
+  text-align: center;
+  background: #846854 url("../images/ground-pattern@2x.png") center top;
+}
+
+h1, h2, h3, h4, h5,
+.h1, .h2, .h3, .h4, .h5 {
+  font-family: molotregular;
+}
+
+header {
+  background: #d0dce5 url("../images/sky-pattern@2x.png") center top fixed;
+  padding-top: 230px;
+  padding-bottom: 20px;
+  border-bottom: 24px solid #a47f66;
+  margin-bottom: 260px;
+}
+
+header h1 {
+  margin: 0;
+  padding: 0;
+  color: #565656;
+}
+
+header h1 img {
+  position: relative;
+  animation-name: logo;
+  animation-duration: 0.6s;
+  animation-timing-function: linear;
+  animation-delay: 0s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+
+  -webkit-animation-name: logo;
+  -webkit-animation-duration: 0.6s;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-delay: 0s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-direction: alternate;
+
+}
+
+@keyframes logo
+{
+0%   { bottom: 0px; }
+100%  { bottom: 10px;}
+}
+
+@-webkit-keyframes logo
+{
+0%   { bottom: 0px; }
+100%  { bottom: 10px;}
+}
+
+header small {
+  display: block;
+  margin-bottom: 20px;
+}
+
+.sections {
+  padding: 0 20px;
+  color: #a47f66;
+}
+
+.people {
+  list-style: none;
+  padding: 0;
+}
+
+.people li {
+  margin-bottom: 10px;
+  display: inline-block;
+  background: #624c3d;
+  color: #a47f66;
+  padding: 3px 5px;
+  border-radius: 5px;
+}
+
+.buttons {
+  padding: 20px 0;
+}
+.btn {
+  display: inline-block;
+  width: 150px;
+  height: 74px;
+}
+.btn span {
+  font-size: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.appstore-btn {
+  background: url("../images/appstore-btn.svg") no-repeat center top;
+  background-size: 100%;
+}
+.appstore-btn:active {
+  background: url("../images/appstore-btn.svg") no-repeat center bottom;
+  background-size: 100%;
+}
+
+section {
+  box-shadow: inset 0 7px 0 #624c3d;
+  padding: 15px;
+  border-radius: 10px;
+  background: #6e5544;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+section h1 {
+  font-family: molotregular;
+  font-weight: normal;
+  color: #a47f66;
+  font-size: 30px;
+  margin: 0;
+}
+
+section h1 .highlight {
+  color: #bb9f8c;
+}
+
+section h1 .big {
+  color: #624c3d;
+  font-size: 100px;
+  display: block;
+}
+section h1 .larger {
+  font-size: 40px;
+}
+section h1 .large {
+
+  font-size: 65px;
+  word-spacing: -20px;
+  display: block;
+}
+section h1 .middle {
+  line-height: 1;
+  font-size: 78px;
+  word-spacing: -20px;
+  color: #f2d2bd;
+}
+
+@media screen and (max-width: 600px){
+  section h1 span {
+    display: inline !important;
+    font-size: 30px !important;
+    word-spacing: 0 !important;
+  }
+}
+
+section + section {
+  margin-top: 40px;
+}
+
+section p {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.4;
+}
+
+footer {
+  color: #6e5544;
+  font-size: 12px;
+  font-weight: normal;
+  padding-bottom: 60px;
+}
+
+footer a {
+  color: #6e5544;
+}
