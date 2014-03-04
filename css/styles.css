@@ -36,10 +36,10 @@ h1, h2, h3, h4, h5,
 
 header {
   background: #d0dce5 url("../images/sky-pattern@2x.png") center top fixed;
-  padding-top: 230px;
+  padding-top: 100px;
   padding-bottom: 20px;
   border-bottom: 24px solid #a47f66;
-  margin-bottom: 260px;
+  margin-bottom: 60px;
 }
 
 header h1 {
