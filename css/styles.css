@@ -167,6 +167,10 @@ section h1 .middle {
   color: #f2d2bd;
 }
 
+.fb-like > span {
+    vertical-align: baseline !important;
+}
+
 @media screen and (max-width: 600px){
   section h1 span {
     display: inline !important;
