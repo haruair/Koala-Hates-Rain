@@ -49,10 +49,6 @@
   <<Koala Hates Rain>>
   by haruair http://haruair.com
 
-  SpriteKit, GarageBand, Adobe Photoshop and Illustrator
-  iPhone 5s and iPad 3
-  Almost one month
-  
   Copyright 2014 Haruair All Rights Reserved.
 
 --><!doctype html>
@@ -64,6 +60,7 @@
     <link rel="shortcut icon" href="images/logo.png" />
     <link rel="stylesheet" href="css/styles.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -94,9 +91,9 @@
         </section>
         <section>
           <h1>Download</h1>
-          <p>US<br /><a href="https://itunes.apple.com/us/app/koala-hates-rain/id824136867?ls=1&mt=8"><img src="images/appstore@2x.png" width="135" alt="Download from US Appstore" /></a></p>
-          <p>AU<br /><a href="https://itunes.apple.com/au/app/koala-hates-rain/id824136867?ls=1&mt=8"><img src="images/appstore@2x.png" width="135" alt="Download from Australia Appstore" /></a></p>
-          <p>KR<br /><a href="https://itunes.apple.com/kr/app/koala-hates-rain/id824136867?ls=1&mt=8"><img src="images/appstore@2x.png" width="135" alt="한국 앱스토어에서 내려받기" /></a></p>
+          <p>US<br /><a target="_blank" class="app-download" data-store="us" href="https://itunes.apple.com/us/app/koala-hates-rain/id824136867?ls=1&mt=8"><img src="images/appstore@2x.png" width="135" alt="Download from US Appstore" /></a></p>
+          <p>AU<br /><a target="_blank" class="app-download" data-store="au" href="https://itunes.apple.com/au/app/koala-hates-rain/id824136867?ls=1&mt=8"><img src="images/appstore@2x.png" width="135" alt="Download from Australia Appstore" /></a></p>
+          <p>KR<br /><a target="_blank" class="app-download" data-store="kr" href="https://itunes.apple.com/kr/app/koala-hates-rain/id824136867?ls=1&mt=8"><img src="images/appstore@2x.png" width="135" alt="한국 앱스토어에서 내려받기" /></a></p>
         </section>
         <section>
           <h1>Thanks To</h1>
@@ -135,17 +132,25 @@
       </footer>
     </div>
 
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-48511867-2', 'koalahatesrain.com');
-  ga('send', 'pageview');
-
-</script>
+      ga('create', 'UA-48511867-2', 'koalahatesrain.com');
+      ga('send', 'pageview');
+    </script>
+    <script>
+      (function($){
+        $(".app-download").on("click",function(){
+          _gaq.push(['_trackEvent', 'App', 'GoToAppstore', $(this).attr("data-store")]);
+        });
+      })(jQuery);
+    </script>
   </body>
 </html>
 
