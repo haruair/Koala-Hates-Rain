@@ -91,9 +91,7 @@
         </section>
         <section>
           <h1>Download</h1>
-          <p>US<br /><a target="_blank" class="app-download" data-store="us" href="https://itunes.apple.com/us/app/koala-hates-rain/id824136867?ls=1&mt=8"><img src="images/appstore@2x.png" width="135" alt="Download from US Appstore" /></a></p>
-          <p>AU<br /><a target="_blank" class="app-download" data-store="au" href="https://itunes.apple.com/au/app/koala-hates-rain/id824136867?ls=1&mt=8"><img src="images/appstore@2x.png" width="135" alt="Download from Australia Appstore" /></a></p>
-          <p>KR<br /><a target="_blank" class="app-download" data-store="kr" href="https://itunes.apple.com/kr/app/koala-hates-rain/id824136867?ls=1&mt=8"><img src="images/appstore@2x.png" width="135" alt="한국 앱스토어에서 내려받기" /></a></p>
+          <p><a target="_blank" class="app-download" href="https://itunes.apple.com/app/id824136867"><img src="images/appstore@2x.png" width="135" alt="Download from Apple Appstore" /></a></p>
         </section>
         <section>
           <h1>Thanks To</h1>
@@ -147,7 +145,7 @@
     <script>
       (function($){
         $(".app-download").on("click",function(){
-          _gaq.push(['_trackEvent', 'App', 'GoToAppstore', $(this).attr("data-store")]);
+          _gaq.push(['_trackEvent', 'App', 'GoToAppstore']);
         });
       })(jQuery);
     </script>
