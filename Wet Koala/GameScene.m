@@ -302,7 +302,7 @@ static const uint32_t koalaCategory    =  0x1 << 1;
     
     [rateButton setMethod: ^ (void) {
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:
-                                                    @"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=824136867"
+                                                    @"itms-apps://itunes.apple.com/app/id824136867"
                                                     ]];
 
     } ];
